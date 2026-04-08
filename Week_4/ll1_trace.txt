@@ -1,0 +1,2071 @@
+--- LL(1) Stack Trace ---
+
+Stack: [ EOF Program ]
+Input: int (Type: 0)
+Action: Predict Rule Program -> StmtList 
+
+Stack: [ EOF StmtList ]
+Input: int (Type: 0)
+Action: Predict Rule StmtList -> Stmt StmtList 
+
+Stack: [ EOF StmtList Stmt ]
+Input: int (Type: 0)
+Action: Predict Rule Stmt -> DeclStmt 
+
+Stack: [ EOF StmtList DeclStmt ]
+Input: int (Type: 0)
+Action: Predict Rule DeclStmt -> int ID DeclTail 
+
+Stack: [ EOF StmtList DeclTail ID int ]
+Input: int (Type: 0)
+Action: Match int
+
+Stack: [ EOF StmtList DeclTail ID ]
+Input: a (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList DeclTail ]
+Input: ; (Type: 27)
+Action: Predict Rule DeclTail -> ; 
+
+Stack: [ EOF StmtList ; ]
+Input: ; (Type: 27)
+Action: Match ;
+
+Stack: [ EOF StmtList ]
+Input: int (Type: 0)
+Action: Predict Rule StmtList -> Stmt StmtList 
+
+Stack: [ EOF StmtList Stmt ]
+Input: int (Type: 0)
+Action: Predict Rule Stmt -> DeclStmt 
+
+Stack: [ EOF StmtList DeclStmt ]
+Input: int (Type: 0)
+Action: Predict Rule DeclStmt -> int ID DeclTail 
+
+Stack: [ EOF StmtList DeclTail ID int ]
+Input: int (Type: 0)
+Action: Match int
+
+Stack: [ EOF StmtList DeclTail ID ]
+Input: b (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList DeclTail ]
+Input: ; (Type: 27)
+Action: Predict Rule DeclTail -> ; 
+
+Stack: [ EOF StmtList ; ]
+Input: ; (Type: 27)
+Action: Match ;
+
+Stack: [ EOF StmtList ]
+Input: int (Type: 0)
+Action: Predict Rule StmtList -> Stmt StmtList 
+
+Stack: [ EOF StmtList Stmt ]
+Input: int (Type: 0)
+Action: Predict Rule Stmt -> DeclStmt 
+
+Stack: [ EOF StmtList DeclStmt ]
+Input: int (Type: 0)
+Action: Predict Rule DeclStmt -> int ID DeclTail 
+
+Stack: [ EOF StmtList DeclTail ID int ]
+Input: int (Type: 0)
+Action: Match int
+
+Stack: [ EOF StmtList DeclTail ID ]
+Input: sum (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList DeclTail ]
+Input: ; (Type: 27)
+Action: Predict Rule DeclTail -> ; 
+
+Stack: [ EOF StmtList ; ]
+Input: ; (Type: 27)
+Action: Match ;
+
+Stack: [ EOF StmtList ]
+Input: float (Type: 1)
+Action: Predict Rule StmtList -> Stmt StmtList 
+
+Stack: [ EOF StmtList Stmt ]
+Input: float (Type: 1)
+Action: Predict Rule Stmt -> DeclStmt 
+
+Stack: [ EOF StmtList DeclStmt ]
+Input: float (Type: 1)
+Action: Predict Rule DeclStmt -> float ID DeclTail 
+
+Stack: [ EOF StmtList DeclTail ID float ]
+Input: float (Type: 1)
+Action: Match float
+
+Stack: [ EOF StmtList DeclTail ID ]
+Input: avg (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList DeclTail ]
+Input: ; (Type: 27)
+Action: Predict Rule DeclTail -> ; 
+
+Stack: [ EOF StmtList ; ]
+Input: ; (Type: 27)
+Action: Match ;
+
+Stack: [ EOF StmtList ]
+Input: a (Type: 10)
+Action: Predict Rule StmtList -> Stmt StmtList 
+
+Stack: [ EOF StmtList Stmt ]
+Input: a (Type: 10)
+Action: Predict Rule Stmt -> AssignStmt 
+
+Stack: [ EOF StmtList AssignStmt ]
+Input: a (Type: 10)
+Action: Predict Rule AssignStmt -> ID = BoolExpr ; 
+
+Stack: [ EOF StmtList ; BoolExpr = ID ]
+Input: a (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList ; BoolExpr = ]
+Input: = (Type: 12)
+Action: Match =
+
+Stack: [ EOF StmtList ; BoolExpr ]
+Input: 2 (Type: 11)
+Action: Predict Rule BoolExpr -> AndExpr BoolExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExpr ]
+Input: 2 (Type: 11)
+Action: Predict Rule AndExpr -> EqExpr AndExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExpr ]
+Input: 2 (Type: 11)
+Action: Predict Rule EqExpr -> RelExpr EqExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExpr ]
+Input: 2 (Type: 11)
+Action: Predict Rule RelExpr -> ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: 2 (Type: 11)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: 2 (Type: 11)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: 2 (Type: 11)
+Action: Predict Rule Factor -> NUM 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail NUM ]
+Input: 2 (Type: 11)
+Action: Match NUM
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: * (Type: 15)
+Action: Predict Rule TermTail -> * Factor TermTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor * ]
+Input: * (Type: 15)
+Action: Match *
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: ( (Type: 6)
+Action: Predict Rule Factor -> ( BoolExpr ) 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExpr ( ]
+Input: ( (Type: 6)
+Action: Match (
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExpr ]
+Input: 3 (Type: 11)
+Action: Predict Rule BoolExpr -> AndExpr BoolExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExpr ]
+Input: 3 (Type: 11)
+Action: Predict Rule AndExpr -> EqExpr AndExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExpr ]
+Input: 3 (Type: 11)
+Action: Predict Rule EqExpr -> RelExpr EqExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExpr ]
+Input: 3 (Type: 11)
+Action: Predict Rule RelExpr -> ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: 3 (Type: 11)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: 3 (Type: 11)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: 3 (Type: 11)
+Action: Predict Rule Factor -> NUM 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail NUM ]
+Input: 3 (Type: 11)
+Action: Match NUM
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: + (Type: 13)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: + (Type: 13)
+Action: Predict Rule ArithExprTail -> + Term ArithExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term + ]
+Input: + (Type: 13)
+Action: Match +
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: 4 (Type: 11)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: 4 (Type: 11)
+Action: Predict Rule Factor -> NUM 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail NUM ]
+Input: 4 (Type: 11)
+Action: Match NUM
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: ) (Type: 7)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule RelExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule EqExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule AndExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule BoolExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) ]
+Input: ) (Type: 7)
+Action: Match )
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: ; (Type: 27)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule RelExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule EqExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule AndExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule BoolExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; ]
+Input: ; (Type: 27)
+Action: Match ;
+
+Stack: [ EOF StmtList ]
+Input: b (Type: 10)
+Action: Predict Rule StmtList -> Stmt StmtList 
+
+Stack: [ EOF StmtList Stmt ]
+Input: b (Type: 10)
+Action: Predict Rule Stmt -> AssignStmt 
+
+Stack: [ EOF StmtList AssignStmt ]
+Input: b (Type: 10)
+Action: Predict Rule AssignStmt -> ID = BoolExpr ; 
+
+Stack: [ EOF StmtList ; BoolExpr = ID ]
+Input: b (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList ; BoolExpr = ]
+Input: = (Type: 12)
+Action: Match =
+
+Stack: [ EOF StmtList ; BoolExpr ]
+Input: 15 (Type: 11)
+Action: Predict Rule BoolExpr -> AndExpr BoolExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExpr ]
+Input: 15 (Type: 11)
+Action: Predict Rule AndExpr -> EqExpr AndExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExpr ]
+Input: 15 (Type: 11)
+Action: Predict Rule EqExpr -> RelExpr EqExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExpr ]
+Input: 15 (Type: 11)
+Action: Predict Rule RelExpr -> ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: 15 (Type: 11)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: 15 (Type: 11)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: 15 (Type: 11)
+Action: Predict Rule Factor -> NUM 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail NUM ]
+Input: 15 (Type: 11)
+Action: Match NUM
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: ; (Type: 27)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule RelExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule EqExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule AndExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule BoolExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; ]
+Input: ; (Type: 27)
+Action: Match ;
+
+Stack: [ EOF StmtList ]
+Input: sum (Type: 10)
+Action: Predict Rule StmtList -> Stmt StmtList 
+
+Stack: [ EOF StmtList Stmt ]
+Input: sum (Type: 10)
+Action: Predict Rule Stmt -> AssignStmt 
+
+Stack: [ EOF StmtList AssignStmt ]
+Input: sum (Type: 10)
+Action: Predict Rule AssignStmt -> ID = BoolExpr ; 
+
+Stack: [ EOF StmtList ; BoolExpr = ID ]
+Input: sum (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList ; BoolExpr = ]
+Input: = (Type: 12)
+Action: Match =
+
+Stack: [ EOF StmtList ; BoolExpr ]
+Input: 0 (Type: 11)
+Action: Predict Rule BoolExpr -> AndExpr BoolExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExpr ]
+Input: 0 (Type: 11)
+Action: Predict Rule AndExpr -> EqExpr AndExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExpr ]
+Input: 0 (Type: 11)
+Action: Predict Rule EqExpr -> RelExpr EqExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExpr ]
+Input: 0 (Type: 11)
+Action: Predict Rule RelExpr -> ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: 0 (Type: 11)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: 0 (Type: 11)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: 0 (Type: 11)
+Action: Predict Rule Factor -> NUM 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail NUM ]
+Input: 0 (Type: 11)
+Action: Match NUM
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: ; (Type: 27)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule RelExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule EqExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule AndExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule BoolExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; ]
+Input: ; (Type: 27)
+Action: Match ;
+
+Stack: [ EOF StmtList ]
+Input: while (Type: 4)
+Action: Predict Rule StmtList -> Stmt StmtList 
+
+Stack: [ EOF StmtList Stmt ]
+Input: while (Type: 4)
+Action: Predict Rule Stmt -> WhileStmt 
+
+Stack: [ EOF StmtList WhileStmt ]
+Input: while (Type: 4)
+Action: Predict Rule WhileStmt -> while ( BoolExpr ) Block 
+
+Stack: [ EOF StmtList Block ) BoolExpr ( while ]
+Input: while (Type: 4)
+Action: Match while
+
+Stack: [ EOF StmtList Block ) BoolExpr ( ]
+Input: ( (Type: 6)
+Action: Match (
+
+Stack: [ EOF StmtList Block ) BoolExpr ]
+Input: a (Type: 10)
+Action: Predict Rule BoolExpr -> AndExpr BoolExprTail 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExpr ]
+Input: a (Type: 10)
+Action: Predict Rule AndExpr -> EqExpr AndExprTail 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExpr ]
+Input: a (Type: 10)
+Action: Predict Rule EqExpr -> RelExpr EqExprTail 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExpr ]
+Input: a (Type: 10)
+Action: Predict Rule RelExpr -> ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: a (Type: 10)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: a (Type: 10)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: a (Type: 10)
+Action: Predict Rule Factor -> ID 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ID ]
+Input: a (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: < (Type: 18)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: < (Type: 18)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: < (Type: 18)
+Action: Predict Rule RelExprTail -> < ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr < ]
+Input: < (Type: 18)
+Action: Match <
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: b (Type: 10)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: b (Type: 10)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: b (Type: 10)
+Action: Predict Rule Factor -> ID 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ID ]
+Input: b (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: && (Type: 24)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: && (Type: 24)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: && (Type: 24)
+Action: Predict Rule RelExprTail -> EPSILON 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail ]
+Input: && (Type: 24)
+Action: Predict Rule EqExprTail -> EPSILON 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail ]
+Input: && (Type: 24)
+Action: Predict Rule AndExprTail -> && EqExpr AndExprTail 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExpr && ]
+Input: && (Type: 24)
+Action: Match &&
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExpr ]
+Input: b (Type: 10)
+Action: Predict Rule EqExpr -> RelExpr EqExprTail 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExpr ]
+Input: b (Type: 10)
+Action: Predict Rule RelExpr -> ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: b (Type: 10)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: b (Type: 10)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: b (Type: 10)
+Action: Predict Rule Factor -> ID 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ID ]
+Input: b (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: != (Type: 23)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: != (Type: 23)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: != (Type: 23)
+Action: Predict Rule RelExprTail -> EPSILON 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail ]
+Input: != (Type: 23)
+Action: Predict Rule EqExprTail -> != RelExpr EqExprTail 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExpr != ]
+Input: != (Type: 23)
+Action: Match !=
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExpr ]
+Input: 0 (Type: 11)
+Action: Predict Rule RelExpr -> ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: 0 (Type: 11)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: 0 (Type: 11)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: 0 (Type: 11)
+Action: Predict Rule Factor -> NUM 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail NUM ]
+Input: 0 (Type: 11)
+Action: Match NUM
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: ) (Type: 7)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule RelExprTail -> EPSILON 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail EqExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule EqExprTail -> EPSILON 
+
+Stack: [ EOF StmtList Block ) BoolExprTail AndExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule AndExprTail -> EPSILON 
+
+Stack: [ EOF StmtList Block ) BoolExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule BoolExprTail -> EPSILON 
+
+Stack: [ EOF StmtList Block ) ]
+Input: ) (Type: 7)
+Action: Match )
+
+Stack: [ EOF StmtList Block ]
+Input: { (Type: 8)
+Action: Predict Rule Block -> { StmtList } 
+
+Stack: [ EOF StmtList } StmtList { ]
+Input: { (Type: 8)
+Action: Match {
+
+Stack: [ EOF StmtList } StmtList ]
+Input: int (Type: 0)
+Action: Predict Rule StmtList -> Stmt StmtList 
+
+Stack: [ EOF StmtList } StmtList Stmt ]
+Input: int (Type: 0)
+Action: Predict Rule Stmt -> DeclStmt 
+
+Stack: [ EOF StmtList } StmtList DeclStmt ]
+Input: int (Type: 0)
+Action: Predict Rule DeclStmt -> int ID DeclTail 
+
+Stack: [ EOF StmtList } StmtList DeclTail ID int ]
+Input: int (Type: 0)
+Action: Match int
+
+Stack: [ EOF StmtList } StmtList DeclTail ID ]
+Input: temp (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList } StmtList DeclTail ]
+Input: ; (Type: 27)
+Action: Predict Rule DeclTail -> ; 
+
+Stack: [ EOF StmtList } StmtList ; ]
+Input: ; (Type: 27)
+Action: Match ;
+
+Stack: [ EOF StmtList } StmtList ]
+Input: temp (Type: 10)
+Action: Predict Rule StmtList -> Stmt StmtList 
+
+Stack: [ EOF StmtList } StmtList Stmt ]
+Input: temp (Type: 10)
+Action: Predict Rule Stmt -> AssignStmt 
+
+Stack: [ EOF StmtList } StmtList AssignStmt ]
+Input: temp (Type: 10)
+Action: Predict Rule AssignStmt -> ID = BoolExpr ; 
+
+Stack: [ EOF StmtList } StmtList ; BoolExpr = ID ]
+Input: temp (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList } StmtList ; BoolExpr = ]
+Input: = (Type: 12)
+Action: Match =
+
+Stack: [ EOF StmtList } StmtList ; BoolExpr ]
+Input: a (Type: 10)
+Action: Predict Rule BoolExpr -> AndExpr BoolExprTail 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExpr ]
+Input: a (Type: 10)
+Action: Predict Rule AndExpr -> EqExpr AndExprTail 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExpr ]
+Input: a (Type: 10)
+Action: Predict Rule EqExpr -> RelExpr EqExprTail 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExpr ]
+Input: a (Type: 10)
+Action: Predict Rule RelExpr -> ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: a (Type: 10)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: a (Type: 10)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: a (Type: 10)
+Action: Predict Rule Factor -> ID 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ID ]
+Input: a (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: * (Type: 15)
+Action: Predict Rule TermTail -> * Factor TermTail 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor * ]
+Input: * (Type: 15)
+Action: Match *
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: 2 (Type: 11)
+Action: Predict Rule Factor -> NUM 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail NUM ]
+Input: 2 (Type: 11)
+Action: Match NUM
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: ; (Type: 27)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule RelExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule EqExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule AndExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule BoolExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList ; ]
+Input: ; (Type: 27)
+Action: Match ;
+
+Stack: [ EOF StmtList } StmtList ]
+Input: if (Type: 2)
+Action: Predict Rule StmtList -> Stmt StmtList 
+
+Stack: [ EOF StmtList } StmtList Stmt ]
+Input: if (Type: 2)
+Action: Predict Rule Stmt -> IfStmt 
+
+Stack: [ EOF StmtList } StmtList IfStmt ]
+Input: if (Type: 2)
+Action: Predict Rule IfStmt -> if ( BoolExpr ) Block IfTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExpr ( if ]
+Input: if (Type: 2)
+Action: Match if
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExpr ( ]
+Input: ( (Type: 6)
+Action: Match (
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExpr ]
+Input: ( (Type: 6)
+Action: Predict Rule BoolExpr -> AndExpr BoolExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExpr ]
+Input: ( (Type: 6)
+Action: Predict Rule AndExpr -> EqExpr AndExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExpr ]
+Input: ( (Type: 6)
+Action: Predict Rule EqExpr -> RelExpr EqExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExpr ]
+Input: ( (Type: 6)
+Action: Predict Rule RelExpr -> ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: ( (Type: 6)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: ( (Type: 6)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: ( (Type: 6)
+Action: Predict Rule Factor -> ( BoolExpr ) 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExpr ( ]
+Input: ( (Type: 6)
+Action: Match (
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExpr ]
+Input: temp (Type: 10)
+Action: Predict Rule BoolExpr -> AndExpr BoolExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExpr ]
+Input: temp (Type: 10)
+Action: Predict Rule AndExpr -> EqExpr AndExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExpr ]
+Input: temp (Type: 10)
+Action: Predict Rule EqExpr -> RelExpr EqExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExpr ]
+Input: temp (Type: 10)
+Action: Predict Rule RelExpr -> ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: temp (Type: 10)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: temp (Type: 10)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: temp (Type: 10)
+Action: Predict Rule Factor -> ID 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ID ]
+Input: temp (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: % (Type: 17)
+Action: Predict Rule TermTail -> % Factor TermTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor % ]
+Input: % (Type: 17)
+Action: Match %
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: 3 (Type: 11)
+Action: Predict Rule Factor -> NUM 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail NUM ]
+Input: 3 (Type: 11)
+Action: Match NUM
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: == (Type: 22)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: == (Type: 22)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: == (Type: 22)
+Action: Predict Rule RelExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail ]
+Input: == (Type: 22)
+Action: Predict Rule EqExprTail -> == RelExpr EqExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExpr == ]
+Input: == (Type: 22)
+Action: Match ==
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExpr ]
+Input: 0 (Type: 11)
+Action: Predict Rule RelExpr -> ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: 0 (Type: 11)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: 0 (Type: 11)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: 0 (Type: 11)
+Action: Predict Rule Factor -> NUM 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail NUM ]
+Input: 0 (Type: 11)
+Action: Match NUM
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: ) (Type: 7)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule RelExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule EqExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule AndExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule BoolExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) ]
+Input: ) (Type: 7)
+Action: Match )
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: || (Type: 25)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: || (Type: 25)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: || (Type: 25)
+Action: Predict Rule RelExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail ]
+Input: || (Type: 25)
+Action: Predict Rule EqExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail ]
+Input: || (Type: 25)
+Action: Predict Rule AndExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail ]
+Input: || (Type: 25)
+Action: Predict Rule BoolExprTail -> || AndExpr BoolExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExpr || ]
+Input: || (Type: 25)
+Action: Match ||
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExpr ]
+Input: ( (Type: 6)
+Action: Predict Rule AndExpr -> EqExpr AndExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExpr ]
+Input: ( (Type: 6)
+Action: Predict Rule EqExpr -> RelExpr EqExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExpr ]
+Input: ( (Type: 6)
+Action: Predict Rule RelExpr -> ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: ( (Type: 6)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: ( (Type: 6)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: ( (Type: 6)
+Action: Predict Rule Factor -> ( BoolExpr ) 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExpr ( ]
+Input: ( (Type: 6)
+Action: Match (
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExpr ]
+Input: a (Type: 10)
+Action: Predict Rule BoolExpr -> AndExpr BoolExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExpr ]
+Input: a (Type: 10)
+Action: Predict Rule AndExpr -> EqExpr AndExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExpr ]
+Input: a (Type: 10)
+Action: Predict Rule EqExpr -> RelExpr EqExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExpr ]
+Input: a (Type: 10)
+Action: Predict Rule RelExpr -> ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: a (Type: 10)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: a (Type: 10)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: a (Type: 10)
+Action: Predict Rule Factor -> ID 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ID ]
+Input: a (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: > (Type: 19)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: > (Type: 19)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: > (Type: 19)
+Action: Predict Rule RelExprTail -> > ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr > ]
+Input: > (Type: 19)
+Action: Match >
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: 5 (Type: 11)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: 5 (Type: 11)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: 5 (Type: 11)
+Action: Predict Rule Factor -> NUM 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail NUM ]
+Input: 5 (Type: 11)
+Action: Match NUM
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: ) (Type: 7)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule RelExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule EqExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule AndExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule BoolExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) ]
+Input: ) (Type: 7)
+Action: Match )
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: ) (Type: 7)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule RelExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule EqExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail AndExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule AndExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) BoolExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule BoolExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail Block ) ]
+Input: ) (Type: 7)
+Action: Match )
+
+Stack: [ EOF StmtList } StmtList IfTail Block ]
+Input: { (Type: 8)
+Action: Predict Rule Block -> { StmtList } 
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList { ]
+Input: { (Type: 8)
+Action: Match {
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ]
+Input: sum (Type: 10)
+Action: Predict Rule StmtList -> Stmt StmtList 
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList Stmt ]
+Input: sum (Type: 10)
+Action: Predict Rule Stmt -> AssignStmt 
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList AssignStmt ]
+Input: sum (Type: 10)
+Action: Predict Rule AssignStmt -> ID = BoolExpr ; 
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ; BoolExpr = ID ]
+Input: sum (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ; BoolExpr = ]
+Input: = (Type: 12)
+Action: Match =
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ; BoolExpr ]
+Input: sum (Type: 10)
+Action: Predict Rule BoolExpr -> AndExpr BoolExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ; BoolExprTail AndExpr ]
+Input: sum (Type: 10)
+Action: Predict Rule AndExpr -> EqExpr AndExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ; BoolExprTail AndExprTail EqExpr ]
+Input: sum (Type: 10)
+Action: Predict Rule EqExpr -> RelExpr EqExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ; BoolExprTail AndExprTail EqExprTail RelExpr ]
+Input: sum (Type: 10)
+Action: Predict Rule RelExpr -> ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: sum (Type: 10)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: sum (Type: 10)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: sum (Type: 10)
+Action: Predict Rule Factor -> ID 
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ID ]
+Input: sum (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: + (Type: 13)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: + (Type: 13)
+Action: Predict Rule ArithExprTail -> + Term ArithExprTail 
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term + ]
+Input: + (Type: 13)
+Action: Match +
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: temp (Type: 10)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: temp (Type: 10)
+Action: Predict Rule Factor -> ID 
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ID ]
+Input: temp (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: ; (Type: 27)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule RelExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ; BoolExprTail AndExprTail EqExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule EqExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ; BoolExprTail AndExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule AndExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ; BoolExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule BoolExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ; ]
+Input: ; (Type: 27)
+Action: Match ;
+
+Stack: [ EOF StmtList } StmtList IfTail } StmtList ]
+Input: } (Type: 9)
+Action: Predict Rule StmtList -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList IfTail } ]
+Input: } (Type: 9)
+Action: Match }
+
+Stack: [ EOF StmtList } StmtList IfTail ]
+Input: else (Type: 3)
+Action: Predict Rule IfTail -> else Block 
+
+Stack: [ EOF StmtList } StmtList Block else ]
+Input: else (Type: 3)
+Action: Match else
+
+Stack: [ EOF StmtList } StmtList Block ]
+Input: { (Type: 8)
+Action: Predict Rule Block -> { StmtList } 
+
+Stack: [ EOF StmtList } StmtList } StmtList { ]
+Input: { (Type: 8)
+Action: Match {
+
+Stack: [ EOF StmtList } StmtList } StmtList ]
+Input: sum (Type: 10)
+Action: Predict Rule StmtList -> Stmt StmtList 
+
+Stack: [ EOF StmtList } StmtList } StmtList Stmt ]
+Input: sum (Type: 10)
+Action: Predict Rule Stmt -> AssignStmt 
+
+Stack: [ EOF StmtList } StmtList } StmtList AssignStmt ]
+Input: sum (Type: 10)
+Action: Predict Rule AssignStmt -> ID = BoolExpr ; 
+
+Stack: [ EOF StmtList } StmtList } StmtList ; BoolExpr = ID ]
+Input: sum (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList } StmtList } StmtList ; BoolExpr = ]
+Input: = (Type: 12)
+Action: Match =
+
+Stack: [ EOF StmtList } StmtList } StmtList ; BoolExpr ]
+Input: sum (Type: 10)
+Action: Predict Rule BoolExpr -> AndExpr BoolExprTail 
+
+Stack: [ EOF StmtList } StmtList } StmtList ; BoolExprTail AndExpr ]
+Input: sum (Type: 10)
+Action: Predict Rule AndExpr -> EqExpr AndExprTail 
+
+Stack: [ EOF StmtList } StmtList } StmtList ; BoolExprTail AndExprTail EqExpr ]
+Input: sum (Type: 10)
+Action: Predict Rule EqExpr -> RelExpr EqExprTail 
+
+Stack: [ EOF StmtList } StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExpr ]
+Input: sum (Type: 10)
+Action: Predict Rule RelExpr -> ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList } StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: sum (Type: 10)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList } StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: sum (Type: 10)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList } StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: sum (Type: 10)
+Action: Predict Rule Factor -> ID 
+
+Stack: [ EOF StmtList } StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ID ]
+Input: sum (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList } StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: - (Type: 14)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: - (Type: 14)
+Action: Predict Rule ArithExprTail -> - Term ArithExprTail 
+
+Stack: [ EOF StmtList } StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term - ]
+Input: - (Type: 14)
+Action: Match -
+
+Stack: [ EOF StmtList } StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: 1 (Type: 11)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList } StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: 1 (Type: 11)
+Action: Predict Rule Factor -> NUM 
+
+Stack: [ EOF StmtList } StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail NUM ]
+Input: 1 (Type: 11)
+Action: Match NUM
+
+Stack: [ EOF StmtList } StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: ; (Type: 27)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule RelExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule EqExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList } StmtList ; BoolExprTail AndExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule AndExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList } StmtList ; BoolExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule BoolExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList } StmtList ; ]
+Input: ; (Type: 27)
+Action: Match ;
+
+Stack: [ EOF StmtList } StmtList } StmtList ]
+Input: } (Type: 9)
+Action: Predict Rule StmtList -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList } ]
+Input: } (Type: 9)
+Action: Match }
+
+Stack: [ EOF StmtList } StmtList ]
+Input: a (Type: 10)
+Action: Predict Rule StmtList -> Stmt StmtList 
+
+Stack: [ EOF StmtList } StmtList Stmt ]
+Input: a (Type: 10)
+Action: Predict Rule Stmt -> AssignStmt 
+
+Stack: [ EOF StmtList } StmtList AssignStmt ]
+Input: a (Type: 10)
+Action: Predict Rule AssignStmt -> ID = BoolExpr ; 
+
+Stack: [ EOF StmtList } StmtList ; BoolExpr = ID ]
+Input: a (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList } StmtList ; BoolExpr = ]
+Input: = (Type: 12)
+Action: Match =
+
+Stack: [ EOF StmtList } StmtList ; BoolExpr ]
+Input: a (Type: 10)
+Action: Predict Rule BoolExpr -> AndExpr BoolExprTail 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExpr ]
+Input: a (Type: 10)
+Action: Predict Rule AndExpr -> EqExpr AndExprTail 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExpr ]
+Input: a (Type: 10)
+Action: Predict Rule EqExpr -> RelExpr EqExprTail 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExpr ]
+Input: a (Type: 10)
+Action: Predict Rule RelExpr -> ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: a (Type: 10)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: a (Type: 10)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: a (Type: 10)
+Action: Predict Rule Factor -> ID 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ID ]
+Input: a (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: + (Type: 13)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: + (Type: 13)
+Action: Predict Rule ArithExprTail -> + Term ArithExprTail 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term + ]
+Input: + (Type: 13)
+Action: Match +
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: 1 (Type: 11)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: 1 (Type: 11)
+Action: Predict Rule Factor -> NUM 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail NUM ]
+Input: 1 (Type: 11)
+Action: Match NUM
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: ; (Type: 27)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule RelExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail EqExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule EqExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail AndExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule AndExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList ; BoolExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule BoolExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList ; ]
+Input: ; (Type: 27)
+Action: Match ;
+
+Stack: [ EOF StmtList } StmtList ]
+Input: } (Type: 9)
+Action: Predict Rule StmtList -> EPSILON 
+
+Stack: [ EOF StmtList } ]
+Input: } (Type: 9)
+Action: Match }
+
+Stack: [ EOF StmtList ]
+Input: avg (Type: 10)
+Action: Predict Rule StmtList -> Stmt StmtList 
+
+Stack: [ EOF StmtList Stmt ]
+Input: avg (Type: 10)
+Action: Predict Rule Stmt -> AssignStmt 
+
+Stack: [ EOF StmtList AssignStmt ]
+Input: avg (Type: 10)
+Action: Predict Rule AssignStmt -> ID = BoolExpr ; 
+
+Stack: [ EOF StmtList ; BoolExpr = ID ]
+Input: avg (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList ; BoolExpr = ]
+Input: = (Type: 12)
+Action: Match =
+
+Stack: [ EOF StmtList ; BoolExpr ]
+Input: sum (Type: 10)
+Action: Predict Rule BoolExpr -> AndExpr BoolExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExpr ]
+Input: sum (Type: 10)
+Action: Predict Rule AndExpr -> EqExpr AndExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExpr ]
+Input: sum (Type: 10)
+Action: Predict Rule EqExpr -> RelExpr EqExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExpr ]
+Input: sum (Type: 10)
+Action: Predict Rule RelExpr -> ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: sum (Type: 10)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: sum (Type: 10)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: sum (Type: 10)
+Action: Predict Rule Factor -> ID 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ID ]
+Input: sum (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: / (Type: 16)
+Action: Predict Rule TermTail -> / Factor TermTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor / ]
+Input: / (Type: 16)
+Action: Match /
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: ( (Type: 6)
+Action: Predict Rule Factor -> ( BoolExpr ) 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExpr ( ]
+Input: ( (Type: 6)
+Action: Match (
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExpr ]
+Input: b (Type: 10)
+Action: Predict Rule BoolExpr -> AndExpr BoolExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExpr ]
+Input: b (Type: 10)
+Action: Predict Rule AndExpr -> EqExpr AndExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExpr ]
+Input: b (Type: 10)
+Action: Predict Rule EqExpr -> RelExpr EqExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExpr ]
+Input: b (Type: 10)
+Action: Predict Rule RelExpr -> ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: b (Type: 10)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: b (Type: 10)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: b (Type: 10)
+Action: Predict Rule Factor -> ID 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ID ]
+Input: b (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: - (Type: 14)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: - (Type: 14)
+Action: Predict Rule ArithExprTail -> - Term ArithExprTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term - ]
+Input: - (Type: 14)
+Action: Match -
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: a (Type: 10)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: a (Type: 10)
+Action: Predict Rule Factor -> ID 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ID ]
+Input: a (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: ) (Type: 7)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule RelExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule EqExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule AndExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule BoolExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) ]
+Input: ) (Type: 7)
+Action: Match )
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: ; (Type: 27)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule RelExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail EqExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule EqExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail AndExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule AndExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; BoolExprTail ]
+Input: ; (Type: 27)
+Action: Predict Rule BoolExprTail -> EPSILON 
+
+Stack: [ EOF StmtList ; ]
+Input: ; (Type: 27)
+Action: Match ;
+
+Stack: [ EOF StmtList ]
+Input: if (Type: 2)
+Action: Predict Rule StmtList -> Stmt StmtList 
+
+Stack: [ EOF StmtList Stmt ]
+Input: if (Type: 2)
+Action: Predict Rule Stmt -> IfStmt 
+
+Stack: [ EOF StmtList IfStmt ]
+Input: if (Type: 2)
+Action: Predict Rule IfStmt -> if ( BoolExpr ) Block IfTail 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExpr ( if ]
+Input: if (Type: 2)
+Action: Match if
+
+Stack: [ EOF StmtList IfTail Block ) BoolExpr ( ]
+Input: ( (Type: 6)
+Action: Match (
+
+Stack: [ EOF StmtList IfTail Block ) BoolExpr ]
+Input: ! (Type: 26)
+Action: Predict Rule BoolExpr -> AndExpr BoolExprTail 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExpr ]
+Input: ! (Type: 26)
+Action: Predict Rule AndExpr -> EqExpr AndExprTail 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExpr ]
+Input: ! (Type: 26)
+Action: Predict Rule EqExpr -> RelExpr EqExprTail 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExpr ]
+Input: ! (Type: 26)
+Action: Predict Rule RelExpr -> ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: ! (Type: 26)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: ! (Type: 26)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: ! (Type: 26)
+Action: Predict Rule Factor -> ! Factor 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ! ]
+Input: ! (Type: 26)
+Action: Match !
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: ( (Type: 6)
+Action: Predict Rule Factor -> ( BoolExpr ) 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExpr ( ]
+Input: ( (Type: 6)
+Action: Match (
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExpr ]
+Input: avg (Type: 10)
+Action: Predict Rule BoolExpr -> AndExpr BoolExprTail 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExpr ]
+Input: avg (Type: 10)
+Action: Predict Rule AndExpr -> EqExpr AndExprTail 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExpr ]
+Input: avg (Type: 10)
+Action: Predict Rule EqExpr -> RelExpr EqExprTail 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExpr ]
+Input: avg (Type: 10)
+Action: Predict Rule RelExpr -> ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: avg (Type: 10)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: avg (Type: 10)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: avg (Type: 10)
+Action: Predict Rule Factor -> ID 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ID ]
+Input: avg (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: < (Type: 18)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: < (Type: 18)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: < (Type: 18)
+Action: Predict Rule RelExprTail -> < ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr < ]
+Input: < (Type: 18)
+Action: Match <
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: 5.0 (Type: 11)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: 5.0 (Type: 11)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: 5.0 (Type: 11)
+Action: Predict Rule Factor -> NUM 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail NUM ]
+Input: 5.0 (Type: 11)
+Action: Match NUM
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: ) (Type: 7)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule RelExprTail -> EPSILON 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail EqExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule EqExprTail -> EPSILON 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail AndExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule AndExprTail -> EPSILON 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) BoolExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule BoolExprTail -> EPSILON 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ) ]
+Input: ) (Type: 7)
+Action: Match )
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: ) (Type: 7)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule RelExprTail -> EPSILON 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail EqExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule EqExprTail -> EPSILON 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail AndExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule AndExprTail -> EPSILON 
+
+Stack: [ EOF StmtList IfTail Block ) BoolExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule BoolExprTail -> EPSILON 
+
+Stack: [ EOF StmtList IfTail Block ) ]
+Input: ) (Type: 7)
+Action: Match )
+
+Stack: [ EOF StmtList IfTail Block ]
+Input: { (Type: 8)
+Action: Predict Rule Block -> { StmtList } 
+
+Stack: [ EOF StmtList IfTail } StmtList { ]
+Input: { (Type: 8)
+Action: Match {
+
+Stack: [ EOF StmtList IfTail } StmtList ]
+Input: print (Type: 5)
+Action: Predict Rule StmtList -> Stmt StmtList 
+
+Stack: [ EOF StmtList IfTail } StmtList Stmt ]
+Input: print (Type: 5)
+Action: Predict Rule Stmt -> PrintStmt 
+
+Stack: [ EOF StmtList IfTail } StmtList PrintStmt ]
+Input: print (Type: 5)
+Action: Predict Rule PrintStmt -> print ( BoolExpr ) ; 
+
+Stack: [ EOF StmtList IfTail } StmtList ; ) BoolExpr ( print ]
+Input: print (Type: 5)
+Action: Match print
+
+Stack: [ EOF StmtList IfTail } StmtList ; ) BoolExpr ( ]
+Input: ( (Type: 6)
+Action: Match (
+
+Stack: [ EOF StmtList IfTail } StmtList ; ) BoolExpr ]
+Input: sum (Type: 10)
+Action: Predict Rule BoolExpr -> AndExpr BoolExprTail 
+
+Stack: [ EOF StmtList IfTail } StmtList ; ) BoolExprTail AndExpr ]
+Input: sum (Type: 10)
+Action: Predict Rule AndExpr -> EqExpr AndExprTail 
+
+Stack: [ EOF StmtList IfTail } StmtList ; ) BoolExprTail AndExprTail EqExpr ]
+Input: sum (Type: 10)
+Action: Predict Rule EqExpr -> RelExpr EqExprTail 
+
+Stack: [ EOF StmtList IfTail } StmtList ; ) BoolExprTail AndExprTail EqExprTail RelExpr ]
+Input: sum (Type: 10)
+Action: Predict Rule RelExpr -> ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList IfTail } StmtList ; ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: sum (Type: 10)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList IfTail } StmtList ; ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: sum (Type: 10)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList IfTail } StmtList ; ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: sum (Type: 10)
+Action: Predict Rule Factor -> ID 
+
+Stack: [ EOF StmtList IfTail } StmtList ; ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ID ]
+Input: sum (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList IfTail } StmtList ; ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: ) (Type: 7)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList IfTail } StmtList ; ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList IfTail } StmtList ; ) BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule RelExprTail -> EPSILON 
+
+Stack: [ EOF StmtList IfTail } StmtList ; ) BoolExprTail AndExprTail EqExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule EqExprTail -> EPSILON 
+
+Stack: [ EOF StmtList IfTail } StmtList ; ) BoolExprTail AndExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule AndExprTail -> EPSILON 
+
+Stack: [ EOF StmtList IfTail } StmtList ; ) BoolExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule BoolExprTail -> EPSILON 
+
+Stack: [ EOF StmtList IfTail } StmtList ; ) ]
+Input: ) (Type: 7)
+Action: Match )
+
+Stack: [ EOF StmtList IfTail } StmtList ; ]
+Input: ; (Type: 27)
+Action: Match ;
+
+Stack: [ EOF StmtList IfTail } StmtList ]
+Input: } (Type: 9)
+Action: Predict Rule StmtList -> EPSILON 
+
+Stack: [ EOF StmtList IfTail } ]
+Input: } (Type: 9)
+Action: Match }
+
+Stack: [ EOF StmtList IfTail ]
+Input: else (Type: 3)
+Action: Predict Rule IfTail -> else Block 
+
+Stack: [ EOF StmtList Block else ]
+Input: else (Type: 3)
+Action: Match else
+
+Stack: [ EOF StmtList Block ]
+Input: { (Type: 8)
+Action: Predict Rule Block -> { StmtList } 
+
+Stack: [ EOF StmtList } StmtList { ]
+Input: { (Type: 8)
+Action: Match {
+
+Stack: [ EOF StmtList } StmtList ]
+Input: print (Type: 5)
+Action: Predict Rule StmtList -> Stmt StmtList 
+
+Stack: [ EOF StmtList } StmtList Stmt ]
+Input: print (Type: 5)
+Action: Predict Rule Stmt -> PrintStmt 
+
+Stack: [ EOF StmtList } StmtList PrintStmt ]
+Input: print (Type: 5)
+Action: Predict Rule PrintStmt -> print ( BoolExpr ) ; 
+
+Stack: [ EOF StmtList } StmtList ; ) BoolExpr ( print ]
+Input: print (Type: 5)
+Action: Match print
+
+Stack: [ EOF StmtList } StmtList ; ) BoolExpr ( ]
+Input: ( (Type: 6)
+Action: Match (
+
+Stack: [ EOF StmtList } StmtList ; ) BoolExpr ]
+Input: avg (Type: 10)
+Action: Predict Rule BoolExpr -> AndExpr BoolExprTail 
+
+Stack: [ EOF StmtList } StmtList ; ) BoolExprTail AndExpr ]
+Input: avg (Type: 10)
+Action: Predict Rule AndExpr -> EqExpr AndExprTail 
+
+Stack: [ EOF StmtList } StmtList ; ) BoolExprTail AndExprTail EqExpr ]
+Input: avg (Type: 10)
+Action: Predict Rule EqExpr -> RelExpr EqExprTail 
+
+Stack: [ EOF StmtList } StmtList ; ) BoolExprTail AndExprTail EqExprTail RelExpr ]
+Input: avg (Type: 10)
+Action: Predict Rule RelExpr -> ArithExpr RelExprTail 
+
+Stack: [ EOF StmtList } StmtList ; ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExpr ]
+Input: avg (Type: 10)
+Action: Predict Rule ArithExpr -> Term ArithExprTail 
+
+Stack: [ EOF StmtList } StmtList ; ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail Term ]
+Input: avg (Type: 10)
+Action: Predict Rule Term -> Factor TermTail 
+
+Stack: [ EOF StmtList } StmtList ; ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail Factor ]
+Input: avg (Type: 10)
+Action: Predict Rule Factor -> ID 
+
+Stack: [ EOF StmtList } StmtList ; ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ID ]
+Input: avg (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList } StmtList ; ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail TermTail ]
+Input: ) (Type: 7)
+Action: Predict Rule TermTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList ; ) BoolExprTail AndExprTail EqExprTail RelExprTail ArithExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule ArithExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList ; ) BoolExprTail AndExprTail EqExprTail RelExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule RelExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList ; ) BoolExprTail AndExprTail EqExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule EqExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList ; ) BoolExprTail AndExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule AndExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList ; ) BoolExprTail ]
+Input: ) (Type: 7)
+Action: Predict Rule BoolExprTail -> EPSILON 
+
+Stack: [ EOF StmtList } StmtList ; ) ]
+Input: ) (Type: 7)
+Action: Match )
+
+Stack: [ EOF StmtList } StmtList ; ]
+Input: ; (Type: 27)
+Action: Match ;
+
+Stack: [ EOF StmtList } StmtList ]
+Input: } (Type: 9)
+Action: Predict Rule StmtList -> EPSILON 
+
+Stack: [ EOF StmtList } ]
+Input: } (Type: 9)
+Action: Match }
+
+Stack: [ EOF StmtList ]
+Input: EOF (Type: 28)
+Action: Predict Rule StmtList -> EPSILON 
+
+Stack: [ EOF ]
+Input: EOF (Type: 28)
+Action: Match EOF
+
+LL(1) Parsing Result: SUCCESS

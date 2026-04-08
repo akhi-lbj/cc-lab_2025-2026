@@ -1,0 +1,545 @@
+--- Shift-Reduce Stack Trace ---
+
+Stack before Shift: [ ]
+Action: SHIFT int
+
+Stack before Shift: [ int ]
+Action: SHIFT a
+
+Stack before Reduce: [ int ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor ]
+Action: SHIFT ;
+
+Stack before Reduce: [ int Factor ; ]
+Action: REDUCE DeclTail -> ; 
+
+Stack before Shift: [ int Factor DeclTail ]
+Action: SHIFT int
+
+Stack before Shift: [ int Factor DeclTail int ]
+Action: SHIFT b
+
+Stack before Reduce: [ int Factor DeclTail int ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor ]
+Action: SHIFT ;
+
+Stack before Reduce: [ int Factor DeclTail int Factor ; ]
+Action: REDUCE DeclTail -> ; 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail ]
+Action: SHIFT int
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int ]
+Action: SHIFT sum
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor ]
+Action: SHIFT ;
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor ; ]
+Action: REDUCE DeclTail -> ; 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail ]
+Action: SHIFT float
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float ]
+Action: SHIFT avg
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor ]
+Action: SHIFT ;
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor ; ]
+Action: REDUCE DeclTail -> ; 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail ]
+Action: SHIFT a
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor ]
+Action: SHIFT =
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = ]
+Action: SHIFT 2
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = NUM ]
+Action: REDUCE Factor -> NUM 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor ]
+Action: SHIFT *
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ]
+Action: SHIFT (
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( ]
+Action: SHIFT 3
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( NUM ]
+Action: REDUCE Factor -> NUM 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor ]
+Action: SHIFT +
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + ]
+Action: SHIFT 4
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + NUM ]
+Action: REDUCE Factor -> NUM 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ]
+Action: SHIFT )
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) ]
+Action: SHIFT ;
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) ; ]
+Action: REDUCE DeclTail -> ; 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail ]
+Action: SHIFT b
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor ]
+Action: SHIFT =
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = ]
+Action: SHIFT 15
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = NUM ]
+Action: REDUCE Factor -> NUM 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor ]
+Action: SHIFT ;
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor ; ]
+Action: REDUCE DeclTail -> ; 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail ]
+Action: SHIFT sum
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor ]
+Action: SHIFT =
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = ]
+Action: SHIFT 0
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = NUM ]
+Action: REDUCE Factor -> NUM 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor ]
+Action: SHIFT ;
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor ; ]
+Action: REDUCE DeclTail -> ; 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail ]
+Action: SHIFT while
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ]
+Action: SHIFT (
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( ]
+Action: SHIFT a
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor ]
+Action: SHIFT <
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < ]
+Action: SHIFT b
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor ]
+Action: SHIFT &&
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && ]
+Action: SHIFT b
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor ]
+Action: SHIFT !=
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != ]
+Action: SHIFT 0
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != NUM ]
+Action: REDUCE Factor -> NUM 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ]
+Action: SHIFT )
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) ]
+Action: SHIFT {
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { ]
+Action: SHIFT int
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int ]
+Action: SHIFT temp
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor ]
+Action: SHIFT ;
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor ; ]
+Action: REDUCE DeclTail -> ; 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail ]
+Action: SHIFT temp
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor ]
+Action: SHIFT =
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = ]
+Action: SHIFT a
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor ]
+Action: SHIFT *
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * ]
+Action: SHIFT 2
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * NUM ]
+Action: REDUCE Factor -> NUM 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor ]
+Action: SHIFT ;
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor ; ]
+Action: REDUCE DeclTail -> ; 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail ]
+Action: SHIFT if
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ]
+Action: SHIFT (
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ]
+Action: SHIFT (
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( ]
+Action: SHIFT temp
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor ]
+Action: SHIFT %
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % ]
+Action: SHIFT 3
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % NUM ]
+Action: REDUCE Factor -> NUM 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor ]
+Action: SHIFT ==
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == ]
+Action: SHIFT 0
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == NUM ]
+Action: REDUCE Factor -> NUM 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ]
+Action: SHIFT )
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) ]
+Action: SHIFT ||
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ]
+Action: SHIFT (
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( ]
+Action: SHIFT a
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor ]
+Action: SHIFT >
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > ]
+Action: SHIFT 5
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > NUM ]
+Action: REDUCE Factor -> NUM 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ]
+Action: SHIFT )
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ]
+Action: SHIFT )
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) ]
+Action: SHIFT {
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { ]
+Action: SHIFT sum
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor ]
+Action: SHIFT =
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = ]
+Action: SHIFT sum
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor ]
+Action: SHIFT +
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + ]
+Action: SHIFT temp
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor ]
+Action: SHIFT ;
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor ; ]
+Action: REDUCE DeclTail -> ; 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail ]
+Action: SHIFT }
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } ]
+Action: SHIFT else
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else ]
+Action: SHIFT {
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { ]
+Action: SHIFT sum
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor ]
+Action: SHIFT =
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = ]
+Action: SHIFT sum
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor ]
+Action: SHIFT -
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - ]
+Action: SHIFT 1
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - NUM ]
+Action: REDUCE Factor -> NUM 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor ]
+Action: SHIFT ;
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor ; ]
+Action: REDUCE DeclTail -> ; 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail ]
+Action: SHIFT }
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } ]
+Action: SHIFT a
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor ]
+Action: SHIFT =
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = ]
+Action: SHIFT a
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor ]
+Action: SHIFT +
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + ]
+Action: SHIFT 1
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + NUM ]
+Action: REDUCE Factor -> NUM 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor ]
+Action: SHIFT ;
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor ; ]
+Action: REDUCE DeclTail -> ; 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail ]
+Action: SHIFT }
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } ]
+Action: SHIFT avg
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor ]
+Action: SHIFT =
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = ]
+Action: SHIFT sum
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor ]
+Action: SHIFT /
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ]
+Action: SHIFT (
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( ]
+Action: SHIFT b
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor ]
+Action: SHIFT -
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - ]
+Action: SHIFT a
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ]
+Action: SHIFT )
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) ]
+Action: SHIFT ;
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) ; ]
+Action: REDUCE DeclTail -> ; 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail ]
+Action: SHIFT if
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ]
+Action: SHIFT (
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ]
+Action: SHIFT !
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ]
+Action: SHIFT (
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( ]
+Action: SHIFT avg
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( Factor ]
+Action: SHIFT <
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( Factor < ]
+Action: SHIFT 5.0
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( Factor < NUM ]
+Action: REDUCE Factor -> NUM 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( Factor < Factor ]
+Action: SHIFT )
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( Factor < Factor ) ]
+Action: SHIFT )
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( Factor < Factor ) ) ]
+Action: SHIFT {
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( Factor < Factor ) ) { ]
+Action: SHIFT print
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( Factor < Factor ) ) { print ]
+Action: SHIFT (
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( Factor < Factor ) ) { print ( ]
+Action: SHIFT sum
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( Factor < Factor ) ) { print ( ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( Factor < Factor ) ) { print ( Factor ]
+Action: SHIFT )
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( Factor < Factor ) ) { print ( Factor ) ]
+Action: SHIFT ;
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( Factor < Factor ) ) { print ( Factor ) ; ]
+Action: REDUCE DeclTail -> ; 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( Factor < Factor ) ) { print ( Factor ) DeclTail ]
+Action: SHIFT }
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( Factor < Factor ) ) { print ( Factor ) DeclTail } ]
+Action: SHIFT else
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( Factor < Factor ) ) { print ( Factor ) DeclTail } else ]
+Action: SHIFT {
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( Factor < Factor ) ) { print ( Factor ) DeclTail } else { ]
+Action: SHIFT print
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( Factor < Factor ) ) { print ( Factor ) DeclTail } else { print ]
+Action: SHIFT (
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( Factor < Factor ) ) { print ( Factor ) DeclTail } else { print ( ]
+Action: SHIFT avg
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( Factor < Factor ) ) { print ( Factor ) DeclTail } else { print ( ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( Factor < Factor ) ) { print ( Factor ) DeclTail } else { print ( Factor ]
+Action: SHIFT )
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( Factor < Factor ) ) { print ( Factor ) DeclTail } else { print ( Factor ) ]
+Action: SHIFT ;
+
+Stack before Reduce: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( Factor < Factor ) ) { print ( Factor ) DeclTail } else { print ( Factor ) ; ]
+Action: REDUCE DeclTail -> ; 
+
+Stack before Shift: [ int Factor DeclTail int Factor DeclTail int Factor DeclTail float Factor DeclTail Factor = Factor * ( Factor + Factor ) DeclTail Factor = Factor DeclTail Factor = Factor DeclTail while ( Factor < Factor && Factor != Factor ) { int Factor DeclTail Factor = Factor * Factor DeclTail if ( ( Factor % Factor == Factor ) || ( Factor > Factor ) ) { Factor = Factor + Factor DeclTail } else { Factor = Factor - Factor DeclTail } Factor = Factor + Factor DeclTail } Factor = Factor / ( Factor - Factor ) DeclTail if ( ! ( Factor < Factor ) ) { print ( Factor ) DeclTail } else { print ( Factor ) DeclTail ]
+Action: SHIFT }
+
