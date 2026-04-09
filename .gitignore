@@ -6,3 +6,10 @@
 
 # Except for the Week_4 directory
 !Week_4/
+
+# Files to ignore
+Week_4/2023A7PS0013U_Akhil_Week_4_Parser_Implementation.c
+Week_4/error.log
+Week_4/ll1_trace.txt
+Week_4/shift_reduce_trace.txt
+
