@@ -1,0 +1,74 @@
+--- Dynamic Generated FIRST and FOLLOW Sets ---
+
+FIRST(Program)  = { int, ID, float, if, while, print, {, EPSILON }
+FOLLOW(Program) = { $ }
+
+FIRST(StmtList)  = { int, ID, float, if, while, print, {, EPSILON }
+FOLLOW(StmtList) = { $, } }
+
+FIRST(Stmt)  = { int, ID, float, if, while, print, { }
+FOLLOW(Stmt) = { $, int, ID, float, if, while, print, {, } }
+
+FIRST(DeclStmt)  = { int, float }
+FOLLOW(DeclStmt) = { $, int, ID, float, if, while, print, {, } }
+
+FIRST(DeclTail)  = { ;, = }
+FOLLOW(DeclTail) = { $, int, ID, float, if, while, print, {, } }
+
+FIRST(AssignStmt)  = { ID }
+FOLLOW(AssignStmt) = { $, int, ID, float, if, while, print, {, } }
+
+FIRST(IfStmt)  = { if }
+FOLLOW(IfStmt) = { $, int, ID, float, if, while, print, {, } }
+
+FIRST(IfTail)  = { else, EPSILON }
+FOLLOW(IfTail) = { $, int, ID, float, if, while, print, {, } }
+
+FIRST(WhileStmt)  = { while }
+FOLLOW(WhileStmt) = { $, int, ID, float, if, while, print, {, } }
+
+FIRST(PrintStmt)  = { print }
+FOLLOW(PrintStmt) = { $, int, ID, float, if, while, print, {, } }
+
+FIRST(Block)  = { { }
+FOLLOW(Block) = { $, int, ID, float, if, else, while, print, {, } }
+
+FIRST(BoolExpr)  = { ID, (, NUM, ! }
+FOLLOW(BoolExpr) = { ;, ) }
+
+FIRST(BoolExprTail)  = { ||, EPSILON }
+FOLLOW(BoolExprTail) = { ;, ) }
+
+FIRST(AndExpr)  = { ID, (, NUM, ! }
+FOLLOW(AndExpr) = { ;, ), || }
+
+FIRST(AndExprTail)  = { &&, EPSILON }
+FOLLOW(AndExprTail) = { ;, ), || }
+
+FIRST(EqExpr)  = { ID, (, NUM, ! }
+FOLLOW(EqExpr) = { ;, ), ||, && }
+
+FIRST(EqExprTail)  = { ==, !=, EPSILON }
+FOLLOW(EqExprTail) = { ;, ), ||, && }
+
+FIRST(RelExpr)  = { ID, (, NUM, ! }
+FOLLOW(RelExpr) = { ;, ), ||, &&, ==, != }
+
+FIRST(RelExprTail)  = { <, >, <=, >=, EPSILON }
+FOLLOW(RelExprTail) = { ;, ), ||, &&, ==, != }
+
+FIRST(ArithExpr)  = { ID, (, NUM, ! }
+FOLLOW(ArithExpr) = { ;, ), ||, &&, ==, !=, <, >, <=, >= }
+
+FIRST(ArithExprTail)  = { +, -, EPSILON }
+FOLLOW(ArithExprTail) = { ;, ), ||, &&, ==, !=, <, >, <=, >= }
+
+FIRST(Term)  = { ID, (, NUM, ! }
+FOLLOW(Term) = { ;, ), ||, &&, ==, !=, <, >, <=, >=, +, - }
+
+FIRST(TermTail)  = { *, /, %, EPSILON }
+FOLLOW(TermTail) = { ;, ), ||, &&, ==, !=, <, >, <=, >=, +, - }
+
+FIRST(Factor)  = { ID, (, NUM, ! }
+FOLLOW(Factor) = { ;, ), ||, &&, ==, !=, <, >, <=, >=, +, -, *, /, % }
+
