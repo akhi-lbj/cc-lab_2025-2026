@@ -19,7 +19,7 @@ typedef enum {
 const char *token_names[] = {
     "int", "float", "if", "else", "while", "print",
     "(", ")", "{", "}", "ID", "NUM", "=", "+", "-", "*", "/", "%",
-    "<", ">", "<=", ">=", "==", "!=", "&&", "||", "!", ";", "$", "ERROR"
+    "<", ">", "<=", ">=", "==", "!=", "&&", "||", "!", ";", "EOF", "ERROR"
 };
 
 typedef struct {
@@ -42,7 +42,7 @@ void advance_lexer() {
 
     if (*input_ptr == '\0') {
         current_token.type = TOK_EOF;
-        strcpy(current_token.lexeme, "$");
+        strcpy(current_token.lexeme, "EOF");
         return;
     }
 
@@ -199,7 +199,7 @@ int Term, TermTail, Factor;
 
 void init_grammar() {
     sym_epsilon = get_or_add_symbol("EPSILON", SYM_EPSILON, -1);
-    sym_eof = get_or_add_symbol("$", SYM_EOF, TOK_EOF);
+    sym_eof = get_or_add_symbol("EOF", SYM_EOF, TOK_EOF);
 
     Program = add_nonterm("Program");
     StmtList = add_nonterm("StmtList");
@@ -412,52 +412,36 @@ void compute_follow() {
 }
 
 void print_first_follow() {
-    FILE *fout = fopen("first_follow.txt", "w");
-    if (!fout) { printf("Failed to open first_follow.txt\n"); return; }
-
     printf("\n--- FIRST and FOLLOW Sets ---\n");
-    fprintf(fout, "--- Dynamic Generated FIRST and FOLLOW Sets ---\n\n");
-
     for (int i = 0; i < symbol_count; i++) {
         if (symbols[i].type == SYM_NONTERMINAL) {
-            // Print FIRST
             printf("FIRST(%s)  = { ", symbols[i].name);
-            fprintf(fout, "FIRST(%s)  = { ", symbols[i].name);
             bool first_item = true;
             for (int j = 0; j < symbol_count; j++) {
                 if (first[i][j]) {
-                    if (!first_item) { printf(", "); fprintf(fout, ", "); }
+                    if (!first_item) printf(", ");
                     printf("%s", symbols[j].name);
-                    fprintf(fout, "%s", symbols[j].name);
                     first_item = false;
                 }
             }
             if (has_epsilon_first[i]) {
-                if (!first_item) { printf(", "); fprintf(fout, ", "); }
+                if (!first_item) printf(", ");
                 printf("EPSILON");
-                fprintf(fout, "EPSILON");
             }
             printf(" }\n");
-            fprintf(fout, " }\n");
 
-            // Print FOLLOW
             printf("FOLLOW(%s) = { ", symbols[i].name);
-            fprintf(fout, "FOLLOW(%s) = { ", symbols[i].name);
             first_item = true;
             for (int j = 0; j < symbol_count; j++) {
                 if (follow[i][j]) {
-                    if (!first_item) { printf(", "); fprintf(fout, ", "); }
+                    if (!first_item) printf(", ");
                     printf("%s", symbols[j].name);
-                    fprintf(fout, "%s", symbols[j].name);
                     first_item = false;
                 }
             }
             printf(" }\n\n");
-            fprintf(fout, " }\n\n");
         }
     }
-    fclose(fout);
-    printf("FIRST and FOLLOW sets saved to first_follow.txt\n");
 }
 
 int ll1_table[MAX_SYMBOLS][MAX_SYMBOLS];
@@ -566,7 +550,7 @@ void parse_ll1() {
             fprintf(fout, "Action: Match %s\n\n", symbols[X].name);
             read_index++;
             if (read_index < token_count) curr = all_tokens[read_index];
-            else { curr.type = TOK_EOF; strcpy(curr.lexeme, "$"); }
+            else { curr.type = TOK_EOF; strcpy(curr.lexeme, "EOF"); }
         } else if (symbols[X].type == SYM_TERMINAL || symbols[X].type == SYM_EOF) {
             fprintf(fout, "Action: ERROR! Expected %s but got %s\n\n", symbols[X].name, symbols[curr_sym].name);
             break;
@@ -662,7 +646,7 @@ void parse_shift_reduce() {
             
             read_index++;
             if (read_index < token_count) curr = all_tokens[read_index];
-            else { curr.type = TOK_EOF; strcpy(curr.lexeme, "$"); }
+            else { curr.type = TOK_EOF; strcpy(curr.lexeme, "EOF"); }
         }
     }
     
