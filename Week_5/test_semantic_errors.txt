@@ -1,0 +1,24 @@
+/* Semantic Analysis Test: Errors CASE */
+
+int x;
+int x; /* ERROR: Multiple declaration */
+
+void main() {
+    int a;
+    float b;
+    bool c;
+
+    a = 5.5; /* ERROR: Type mismatch (float to int) */
+    b = 10;  /* OK: (widening int to float) */
+    c = 5;   /* ERROR: Type mismatch (int to bool) */
+
+    d = 20;  /* ERROR: Use of undeclared variable 'd' */
+
+    if (a + b) { /* ERROR: Non-boolean condition (arithmetic) */
+        print(a);
+    }
+
+    while (!c) { /* OK: boolean condition */
+        c = true;
+    }
+}

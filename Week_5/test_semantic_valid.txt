@@ -1,0 +1,27 @@
+/* Semantic Analysis Test: Valid CASE */
+
+class Math {
+    int factor;
+    void init(int f) {
+        factor = f;
+    }
+}
+
+int globalVar;
+
+void testFunc(int p1, float p2) {
+    int localX = 10;
+    float localY = 5.5;
+    bool flag = true;
+
+    localX = 20; 
+    localY = localX + 5; /* OK: widening */
+    
+    if (flag) {
+        print(localY);
+    }
+
+    while (localX > 0) {
+        localX = localX - 1;
+    }
+}
