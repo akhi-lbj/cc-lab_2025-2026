@@ -433,7 +433,15 @@ ASTNode* parse_BoolExpr(void) {
 /* Statement parsers — now return AST nodes */
 ASTNode* parse_Stmt(void);
 ASTNode* parse_StmtList(void);
-
+/* parse_Block — creates NODE_BLOCK and returns it (used by while/if/standalone blocks) */
+ASTNode* parse_Block(void) {
+    ASTNode* n = create_node(NODE_BLOCK, current_token.line);
+    match(TOK_LBRACE);
+    n->children[0] = parse_StmtList();
+    match(TOK_RBRACE);
+    n->child_count = 1;
+    return n;
+}
 ASTNode* parse_Stmt(void) {
     if (current_token.type == TOK_INT || current_token.type == TOK_FLOAT ||
         current_token.type == TOK_VOID || current_token.type == TOK_BOOL) {
@@ -518,14 +526,11 @@ ASTNode* parse_Stmt(void) {
         match(TOK_LPAREN);
         n->children[0] = parse_BoolExpr();
         match(TOK_RPAREN);
-        match(TOK_LBRACE);
-        n->children[1] = parse_StmtList();
-        match(TOK_RBRACE);
+        n->children[1] = parse_Block();          /* ← FIXED: now a real BLOCK */
         n->child_count = 2;
         if (current_token.type == TOK_ELSE) {
-            match(TOK_ELSE); match(TOK_LBRACE);
-            n->children[2] = parse_StmtList();
-            match(TOK_RBRACE);
+            match(TOK_ELSE);
+            n->children[2] = parse_Block();      /* ← FIXED: else is also a BLOCK */
             n->child_count = 3;
         }
         return n;
@@ -534,9 +539,7 @@ ASTNode* parse_Stmt(void) {
         match(TOK_LPAREN);
         n->children[0] = parse_BoolExpr();
         match(TOK_RPAREN);
-        match(TOK_LBRACE);
-        n->children[1] = parse_StmtList();
-        match(TOK_RBRACE);
+        n->children[1] = parse_Block();          /* ← FIXED: while body is now a BLOCK */
         n->child_count = 2;
         return n;
     } else if (current_token.type == TOK_PRINT) {
@@ -564,12 +567,7 @@ ASTNode* parse_Stmt(void) {
         match(TOK_SEMI);
         return n;
     } else if (current_token.type == TOK_LBRACE) {
-        ASTNode* n = create_node(NODE_BLOCK, current_token.line);
-        match(TOK_LBRACE);
-        n->children[0] = parse_StmtList();
-        match(TOK_RBRACE);
-        n->child_count = 1;
-        return n;
+        return parse_Block();                    /* ← also use the new helper */
     }
     return NULL;
 }
