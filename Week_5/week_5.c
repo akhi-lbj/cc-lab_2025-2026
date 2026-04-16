@@ -37,12 +37,13 @@
 
 typedef enum {
     TOK_INT, TOK_FLOAT, TOK_VOID, TOK_IF, TOK_ELSE, TOK_WHILE, TOK_PRINT,
+    TOK_BOOL, TOK_CLASS, TOK_RETURN,
     TOK_LPAREN, TOK_RPAREN, TOK_LBRACE, TOK_RBRACE,
     TOK_ID, TOK_NUM,
     TOK_ASSIGN, TOK_PLUS, TOK_MINUS, TOK_MUL, TOK_DIV, TOK_MOD,
     TOK_LT, TOK_GT, TOK_LE, TOK_GE, TOK_EQ, TOK_NEQ,
     TOK_AND, TOK_OR, TOK_NOT,
-    TOK_SEMI, TOK_EOF, TOK_ERROR
+    TOK_SEMI, TOK_COMMA, TOK_COLON, TOK_EOF, TOK_ERROR
 } TokenType;
 
 typedef struct {
@@ -210,6 +211,9 @@ const char* token_type_to_string(TokenType type) {
         case TOK_INT:    return "int";
         case TOK_FLOAT:  return "float";
         case TOK_VOID:   return "void";
+        case TOK_BOOL:   return "bool";
+        case TOK_CLASS:  return "class";
+        case TOK_RETURN: return "return";
         case TOK_IF:     return "if";
         case TOK_ELSE:   return "else";
         case TOK_WHILE:  return "while";
@@ -236,6 +240,8 @@ const char* token_type_to_string(TokenType type) {
         case TOK_OR:     return "'||'";
         case TOK_NOT:    return "'!'";
         case TOK_SEMI:   return "';'";
+        case TOK_COMMA:  return "','";
+        case TOK_COLON:  return "':'";
         case TOK_EOF:    return "EOF";
         default:         return "Unknown";
     }
@@ -245,6 +251,7 @@ const char* token_category(TokenType type) {
     switch (type) {
         case TOK_INT: case TOK_FLOAT: case TOK_VOID: case TOK_IF:
         case TOK_ELSE: case TOK_WHILE: case TOK_PRINT:
+        case TOK_BOOL: case TOK_CLASS: case TOK_RETURN:
             return "Keyword";
         case TOK_ID:     return "Identifier";
         case TOK_NUM:    return "Number";
@@ -258,7 +265,8 @@ const char* token_category(TokenType type) {
         case TOK_AND: case TOK_OR: case TOK_NOT:
             return "Logical Op";
         case TOK_LPAREN: case TOK_RPAREN: case TOK_LBRACE:
-        case TOK_RBRACE: case TOK_SEMI:
+        case TOK_RBRACE: case TOK_SEMI: case TOK_COMMA:
+        case TOK_COLON:
             return "Delimiter";
         default:         return "Error";
     }
@@ -288,14 +296,17 @@ void advance(void) {
         }
         current_token.lexeme[i] = '\0';
 
-        if      (strcmp(current_token.lexeme, "if")    == 0)  current_token.type = TOK_IF;
-        else if (strcmp(current_token.lexeme, "else")  == 0)  current_token.type = TOK_ELSE;
-        else if (strcmp(current_token.lexeme, "while") == 0)  current_token.type = TOK_WHILE;
-        else if (strcmp(current_token.lexeme, "print") == 0)  current_token.type = TOK_PRINT;
-        else if (strcmp(current_token.lexeme, "int")   == 0)  current_token.type = TOK_INT;
-        else if (strcmp(current_token.lexeme, "float") == 0)  current_token.type = TOK_FLOAT;
-        else if (strcmp(current_token.lexeme, "void")  == 0)  current_token.type = TOK_VOID;
-        else                                                  current_token.type = TOK_ID;
+        if      (strcmp(current_token.lexeme, "if")     == 0)  current_token.type = TOK_IF;
+        else if (strcmp(current_token.lexeme, "else")   == 0)  current_token.type = TOK_ELSE;
+        else if (strcmp(current_token.lexeme, "while")  == 0)  current_token.type = TOK_WHILE;
+        else if (strcmp(current_token.lexeme, "print")  == 0)  current_token.type = TOK_PRINT;
+        else if (strcmp(current_token.lexeme, "int")    == 0)  current_token.type = TOK_INT;
+        else if (strcmp(current_token.lexeme, "float")  == 0)  current_token.type = TOK_FLOAT;
+        else if (strcmp(current_token.lexeme, "void")   == 0)  current_token.type = TOK_VOID;
+        else if (strcmp(current_token.lexeme, "bool")   == 0)  current_token.type = TOK_BOOL;
+        else if (strcmp(current_token.lexeme, "class")  == 0)  current_token.type = TOK_CLASS;
+        else if (strcmp(current_token.lexeme, "return") == 0)  current_token.type = TOK_RETURN;
+        else                                                   current_token.type = TOK_ID;
         return;
     }
 
@@ -329,6 +340,8 @@ void advance(void) {
         case '{': current_token.type = TOK_LBRACE; input_ptr++; break;
         case '}': current_token.type = TOK_RBRACE; input_ptr++; break;
         case ';': current_token.type = TOK_SEMI;   input_ptr++; break;
+        case ',': current_token.type = TOK_COMMA;  input_ptr++; break;
+        case ':': current_token.type = TOK_COLON;  input_ptr++; break;
         case '+': current_token.type = TOK_PLUS;   input_ptr++; break;
         case '-': current_token.type = TOK_MINUS;  input_ptr++; break;
         case '*': current_token.type = TOK_MUL;    input_ptr++; break;
@@ -434,6 +447,8 @@ void parse_BoolExpr(void);
 void parse_StmtList(void);
 void parse_Stmt(void);
 void parse_Block(void);
+void parse_ClassDef(void);
+void parse_ReturnStmt(void);
 
 /* match: consume a token of expected type, report syntax error otherwise */
 void match(TokenType expected) {
@@ -534,11 +549,51 @@ void parse_BoolExpr(void) {
  * then the parameter list (currently empty) and the body block are parsed.
  * Otherwise it is a normal variable declaration.
  */
+/*
+ * parse_ParamList() — parse a comma-separated list of typed parameters
+ * inside function parentheses.  E.g.  (int m)  or  (int a, float b)
+ * Parameters are inserted into the CURRENT scope (the function body scope
+ * is not yet open, so they go into the enclosing scope — we will re-insert
+ * them into the function body scope after push_scope, or we can push first).
+ * For simplicity, we push the function body scope BEFORE parsing params
+ * so params live inside the function scope.
+ */
+void parse_ParamList(void) {
+    /* If immediately ')' → no parameters */
+    if (current_token.type == TOK_RPAREN) return;
+
+    /* First parameter */
+    if (current_token.type == TOK_INT || current_token.type == TOK_FLOAT ||
+        current_token.type == TOK_VOID || current_token.type == TOK_BOOL) {
+        char ptype[16];
+        strcpy(ptype, current_token.lexeme);
+        match(current_token.type);
+
+        char pname[64];
+        strncpy(pname, current_token.lexeme, 63); pname[63] = '\0';
+        match(TOK_ID);
+        insert_symbol(pname, ptype);
+
+        /* Additional parameters separated by ',' */
+        while (current_token.type == TOK_COMMA) {
+            match(TOK_COMMA);
+            strcpy(ptype, current_token.lexeme);
+            if (current_token.type == TOK_INT || current_token.type == TOK_FLOAT ||
+                current_token.type == TOK_VOID || current_token.type == TOK_BOOL) {
+                match(current_token.type);
+            }
+            strncpy(pname, current_token.lexeme, 63); pname[63] = '\0';
+            match(TOK_ID);
+            insert_symbol(pname, ptype);
+        }
+    }
+}
+
 void parse_DeclOrFunc(void) {
     if (current_token.type == TOK_INT || current_token.type == TOK_FLOAT ||
-        current_token.type == TOK_VOID) {
+        current_token.type == TOK_VOID || current_token.type == TOK_BOOL) {
         char declared_type[16];
-        strcpy(declared_type, current_token.lexeme);   /* "int", "float", or "void" */
+        strcpy(declared_type, current_token.lexeme);   /* "int", "float", "void", or "bool" */
         match(current_token.type);
 
         /* Capture the name before matching */
@@ -550,11 +605,29 @@ void parse_DeclOrFunc(void) {
             /* ── Function / Procedure definition ── */
             insert_symbol(name, "proc");
             match(TOK_LPAREN);
+            /* Push the function body scope BEFORE parsing params
+             * so that parameters live inside the function scope */
+            push_scope();
+            parse_ParamList();
             match(TOK_RPAREN);
-            parse_Block();   /* pushes a new scope for the function body */
+            /* Parse the function body '{' ... '}' inline (scope already pushed) */
+            match(TOK_LBRACE);
+            parse_StmtList();
+            print_all_scopes();
+            pop_scope();
+            match(TOK_RBRACE);
         } else {
             /* ── Variable declaration ── */
             insert_symbol(name, declared_type);
+
+            /* Support comma-separated declarations:  int x, y, z; */
+            while (current_token.type == TOK_COMMA) {
+                match(TOK_COMMA);
+                char extra_name[64];
+                strncpy(extra_name, current_token.lexeme, 63); extra_name[63] = '\0';
+                match(TOK_ID);
+                insert_symbol(extra_name, declared_type);
+            }
 
             /* Optional initialisation:  int x = expr; */
             if (current_token.type == TOK_ASSIGN) {
@@ -618,12 +691,72 @@ void parse_PrintStmt(void) {
     match(TOK_SEMI);
 }
 
+/*
+ * parse_ReturnStmt() — handles:  return ;  or  return expr ;
+ */
+void parse_ReturnStmt(void) {
+    match(TOK_RETURN);
+    /* Optional return value — if next token is not ';', parse an expression */
+    if (current_token.type != TOK_SEMI) {
+        parse_BoolExpr();
+    }
+    match(TOK_SEMI);
+}
+
+/*
+ * parse_ClassDef() — handles:  class ClassName { members }
+ * Members can be variable declarations or method (function) definitions.
+ * The class name is inserted into the current scope with type "class".
+ * The class body gets its own scope.
+ */
+void parse_ClassDef(void) {
+    match(TOK_CLASS);
+    char class_name[64];
+    strncpy(class_name, current_token.lexeme, 63); class_name[63] = '\0';
+    match(TOK_ID);
+    insert_symbol(class_name, "class");
+    /* Class body — same as a block but also parses declarations/methods */
+    match(TOK_LBRACE);
+    push_scope();
+    parse_StmtList();
+    print_all_scopes();
+    pop_scope();
+    match(TOK_RBRACE);
+}
+
 void parse_Stmt(void) {
     if (current_token.type == TOK_INT || current_token.type == TOK_FLOAT ||
-        current_token.type == TOK_VOID) {
+        current_token.type == TOK_VOID || current_token.type == TOK_BOOL) {
         parse_DeclOrFunc();
+    } else if (current_token.type == TOK_CLASS) {
+        parse_ClassDef();
+    } else if (current_token.type == TOK_RETURN) {
+        parse_ReturnStmt();
     } else if (current_token.type == TOK_ID) {
-        parse_AssignStmt();
+        /* Could be an assignment  OR  a label (id ':') */
+        /* Save the identifier name */
+        char id_name[64];
+        strncpy(id_name, current_token.lexeme, 63); id_name[63] = '\0';
+        advance();  /* consume the identifier */
+
+        if (current_token.type == TOK_COLON) {
+            /* ── Label definition: id ':' ── */
+            printf("  [LABEL] '%s' on line %d\n", id_name, current_token.line);
+            match(TOK_COLON);
+            /* After a label, there may or may not be another statement */
+        } else if (current_token.type == TOK_ASSIGN) {
+            /* ── Assignment: id '=' expr ';' ── */
+            searchSym(top, id_name);
+            match(TOK_ASSIGN);
+            parse_BoolExpr();
+            match(TOK_SEMI);
+        } else {
+            /* Standalone identifier usage (expression statement) — look it up */
+            searchSym(top, id_name);
+            /* Could be part of an expression — consume remaining expression if any */
+            /* For simplicity, expect a semicolon */
+            match(TOK_SEMI);
+        }
     } else if (current_token.type == TOK_IF) {
         parse_IfStmt();
     } else if (current_token.type == TOK_WHILE) {

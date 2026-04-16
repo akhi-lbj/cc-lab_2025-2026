@@ -1,6 +1,6 @@
 # `week_5.c` — Complete Code Walkthrough
 
-> **File:** `Week_5/week_5.c` · **Total lines:** ~740  
+> **File:** `Week_5/week_5.c` · **Total lines:** ~877  
 > **Language:** C (C99)  
 > **Author:** 2023A7PS0013U Akhil
 
@@ -61,20 +61,25 @@ week_5.c
 │   ├── insert_symbol()
 │   ├── searchSym()
 │   └── print_all_scopes()
-├── PART 4  — Lexical Analyzer        (lines 203–371)
+├── PART 4  — Lexical Analyzer        (lines 203–385)
 │   ├── token_type_to_string()
 │   ├── token_category()
 │   └── advance()
-├── PART 4b — Lexical Analysis Pass   (lines 373–421)
+├── PART 4b — Lexical Analysis Pass   (lines 387–435)
 │   └── run_lexical_analysis()
-├── PART 5  — Syntax Analysis/Parser  (lines 423–637)
+├── PART 5  — Syntax Analysis/Parser  (lines 437–770)
 │   ├── Forward declarations
 │   ├── match()
 │   ├── parse_Factor / Term / ArithExpr / RelExpr / EqExpr
 │   ├── parse_AndExpr / BoolExpr
-│   └── parse_DeclOrFunc / AssignStmt / Block / IfStmt
-│       parse_WhileStmt / PrintStmt / Stmt / StmtList
-└── PART 6  — main()                  (lines 639–735)
+│   ├── parse_ParamList          ← NEW (function parameters)
+│   ├── parse_DeclOrFunc         ← UPDATED (params + comma decls)
+│   ├── parse_AssignStmt / Block
+│   ├── parse_IfStmt / WhileStmt / PrintStmt
+│   ├── parse_ReturnStmt         ← NEW (return statements)
+│   ├── parse_ClassDef           ← NEW (class definitions)
+│   └── parse_Stmt / StmtList
+└── PART 6  — main()                  (lines 772–877)
 ```
 
 ---
@@ -118,21 +123,22 @@ These four `#include` directives pull in C standard library headers. **`<ctype.h
 
 ---
 
-### Lines 34–46 — Token Type Enumeration
+### Lines 34–47 — Token Type Enumeration
 
 ```c
 typedef enum {
     TOK_INT, TOK_FLOAT, TOK_VOID, TOK_IF, TOK_ELSE, TOK_WHILE, TOK_PRINT,
+    TOK_BOOL, TOK_CLASS, TOK_RETURN,
     TOK_LPAREN, TOK_RPAREN, TOK_LBRACE, TOK_RBRACE,
     TOK_ID, TOK_NUM,
     TOK_ASSIGN, TOK_PLUS, TOK_MINUS, TOK_MUL, TOK_DIV, TOK_MOD,
     TOK_LT, TOK_GT, TOK_LE, TOK_GE, TOK_EQ, TOK_NEQ,
     TOK_AND, TOK_OR, TOK_NOT,
-    TOK_SEMI, TOK_EOF, TOK_ERROR
+    TOK_SEMI, TOK_COMMA, TOK_COLON, TOK_EOF, TOK_ERROR
 } TokenType;
 ```
 
-`typedef enum { ... } TokenType;` creates a new **named integer type** where each name is automatically assigned a distinct integer starting from 0. This is the **complete vocabulary** of the mini-language the compiler understands. The first row covers **keywords**: `int`, `float`, `void`, `if`, `else`, `while`, `print`. The `TOK_VOID` token is used when recognising the `void` keyword — it enables the compiler to parse **function/procedure definitions** like `void pro_one() { ... }`. The second row covers **delimiters**: left/right parentheses and left/right curly braces. `TOK_ID` represents any user-defined identifier (variable or function name), while `TOK_NUM` represents any numeric literal (integer or float). The third row covers the **assignment operator** `=` and the five **arithmetic operators** `+`, `-`, `*`, `/`, `%`. The fourth row covers the six **relational/comparison operators**: `<`, `>`, `<=`, `>=`, `==`, `!=`. The fifth row covers the three **logical operators**: `&&`, `||`, `!`. Finally, `TOK_SEMI` is the semicolon `;`, `TOK_EOF` signals end of input, and `TOK_ERROR` is used for any character the lexer cannot classify.
+`typedef enum { ... } TokenType;` creates a new **named integer type** where each name is automatically assigned a distinct integer starting from 0. This is the **complete vocabulary** of the mini-language the compiler understands. The first row covers **keywords**: `int`, `float`, `void`, `if`, `else`, `while`, `print`. The `TOK_VOID` token is used when recognising the `void` keyword — it enables the compiler to parse **function/procedure definitions** like `void pro_one() { ... }`. The second row adds three more **keywords**: `TOK_BOOL` for the `bool` type, `TOK_CLASS` for class definitions, and `TOK_RETURN` for return statements. The third row covers **delimiters**: left/right parentheses and left/right curly braces. `TOK_ID` represents any user-defined identifier (variable or function name), while `TOK_NUM` represents any numeric literal (integer or float). The next rows cover the **assignment operator** `=`, the five **arithmetic operators** `+`, `-`, `*`, `/`, `%`, six **relational/comparison operators**: `<`, `>`, `<=`, `>=`, `==`, `!=`, and three **logical operators**: `&&`, `||`, `!`. Finally, `TOK_SEMI` is the semicolon `;`, `TOK_COMMA` is the comma `,` (used for comma-separated declarations and function parameter lists), `TOK_COLON` is the colon `:` (used for label definitions like `l:`), `TOK_EOF` signals end of input, and `TOK_ERROR` is used for any character the lexer cannot classify.
 
 ---
 
@@ -157,13 +163,13 @@ This `struct` is the **data unit** that the lexer produces and the parser consum
 
 typedef struct {
     char name[64];
-    char type[16];        /* "int", "float", or "proc" */
+    char type[16];        /* "int", "float", "bool", "proc", or "class" */
     int  scope_level;
     int  offset;          /* memory offset in bytes */
 } Symbol;
 ```
 
-`#define MAX_SYMBOLS 128` sets a **compile-time constant** — each scope node can hold at most 128 symbol entries. The `Symbol` struct is the **fundamental record** stored for every declared variable or function. **`name[64]`** holds the identifier text (e.g. `"temp"`, `"avg"`, or `"pro_one"`). **`type[16]`** stores the declared type as a string — `"int"` for integer variables, `"float"` for floating-point variables, or `"proc"` for function/procedure names. When a function definition like `void pro_one() { ... }` is parsed, the function name is inserted into the symbol table with type `"proc"` — exactly as shown in the lecture slides where procedures appear in the global scope with type `proc`. **`scope_level`** is an integer recording which scope level this symbol belongs to — `0` for global, `1` for the first nested block (e.g. a function body), and so on. **`offset`** is the simulated **memory address** of this symbol; it increments by 4 bytes for every new entry, representing how a real compiler would lay out variables in a stack frame.
+`#define MAX_SYMBOLS 128` sets a **compile-time constant** — each scope node can hold at most 128 symbol entries. The `Symbol` struct is the **fundamental record** stored for every declared variable or function. **`name[64]`** holds the identifier text (e.g. `"temp"`, `"avg"`, or `"pro_one"`). **`type[16]`** stores the declared type as a string — `"int"` for integer variables, `"float"` for floating-point variables, `"bool"` for boolean variables, `"proc"` for function/procedure names, or `"class"` for class definitions. When a function definition like `void pro_one() { ... }` is parsed, the function name is inserted into the symbol table with type `"proc"` — exactly as shown in the lecture slides where procedures appear in the global scope with type `proc`. When a class definition like `class Foo { ... }` is parsed, the class name is inserted with type `"class"`. **`scope_level`** is an integer recording which scope level this symbol belongs to — `0` for global, `1` for the first nested block (e.g. a function body), and so on. **`offset`** is the simulated **memory address** of this symbol; it increments by 4 bytes for every new entry, representing how a real compiler would lay out variables in a stack frame.
 
 ---
 
@@ -327,31 +333,38 @@ void print_all_scopes(void) {
 
 ---
 
-### Lines 206–243 — `token_type_to_string()`
+### Lines 208–250 — `token_type_to_string()`
 
 ```c
 const char* token_type_to_string(TokenType type) {
     switch (type) {
         case TOK_INT:    return "int";
         case TOK_FLOAT:  return "float";
+        case TOK_VOID:   return "void";
+        case TOK_BOOL:   return "bool";
+        case TOK_CLASS:  return "class";
+        case TOK_RETURN: return "return";
         ...
+        case TOK_COMMA:  return "','";
+        case TOK_COLON:  return "':'";
         case TOK_EOF:    return "EOF";
         default:         return "Unknown";
     }
 }
 ```
 
-This utility function converts a `TokenType` enum value into a **human-readable string**. It is used exclusively by the **syntax error messages** in `match()` — when the parser expected one token type but found another, it calls this function to produce messages like `"Expected ';', but encountered '}'"`. The `switch` statement covers every enum value. The `default` arm catches any future enum values that were added but not yet handled. Returning `const char*` to a **string literal** is safe in C because string literals have static storage duration — they exist for the lifetime of the program. No heap allocation is needed.
+This utility function converts a `TokenType` enum value into a **human-readable string**. It is used exclusively by the **syntax error messages** in `match()` — when the parser expected one token type but found another, it calls this function to produce messages like `"Expected ';', but encountered '}'"`. The `switch` statement covers every enum value, including the new `TOK_BOOL`, `TOK_CLASS`, `TOK_RETURN`, `TOK_COMMA`, and `TOK_COLON` entries. The `default` arm catches any future enum values that were added but not yet handled. Returning `const char*` to a **string literal** is safe in C because string literals have static storage duration — they exist for the lifetime of the program. No heap allocation is needed.
 
 ---
 
-### Lines 245–266 — `token_category()`
+### Lines 252–276 — `token_category()`
 
 ```c
 const char* token_category(TokenType type) {
     switch (type) {
         case TOK_INT: case TOK_FLOAT: case TOK_VOID: case TOK_IF:
         case TOK_ELSE: case TOK_WHILE: case TOK_PRINT:
+        case TOK_BOOL: case TOK_CLASS: case TOK_RETURN:
             return "Keyword";
         case TOK_ID:     return "Identifier";
         case TOK_NUM:    return "Number";
@@ -365,18 +378,19 @@ const char* token_category(TokenType type) {
         case TOK_AND: case TOK_OR: case TOK_NOT:
             return "Logical Op";
         case TOK_LPAREN: case TOK_RPAREN: case TOK_LBRACE:
-        case TOK_RBRACE: case TOK_SEMI:
+        case TOK_RBRACE: case TOK_SEMI: case TOK_COMMA:
+        case TOK_COLON:
             return "Delimiter";
         default:         return "Error";
     }
 }
 ```
 
-While `token_type_to_string()` returns the precise token value, `token_category()` returns a broader **lexical class** — the kind of label a textbook uses when classifying tokens. Multiple `case` labels can share one `return` in a C `switch` because of **fall-through**: all keyword token types (including `TOK_VOID`) fall into the `"Keyword"` bucket, all arithmetic operators into `"Arithmetic Op"`, etc. This function drives the **Category** column in the Phase 1 lexical analysis table printed to the terminal.
+While `token_type_to_string()` returns the precise token value, `token_category()` returns a broader **lexical class** — the kind of label a textbook uses when classifying tokens. Multiple `case` labels can share one `return` in a C `switch` because of **fall-through**: all keyword token types (including `TOK_VOID`, `TOK_BOOL`, `TOK_CLASS`, and `TOK_RETURN`) fall into the `"Keyword"` bucket, all arithmetic operators into `"Arithmetic Op"`, etc. The `TOK_COMMA` and `TOK_COLON` tokens are classified as `"Delimiter"` alongside parentheses, braces, and semicolons. This function drives the **Category** column in the Phase 1 lexical analysis table printed to the terminal.
 
 ---
 
-### Lines 268–300 — `advance()` — Whitespace, EOF, and Identifiers
+### Lines 278–313 — `advance()` — Whitespace, EOF, and Identifiers
 
 ```c
 void advance(void) {
@@ -400,23 +414,26 @@ void advance(void) {
             input_ptr++;
         }
         current_token.lexeme[i] = '\0';
-        if      (strcmp(current_token.lexeme, "if")    == 0)  current_token.type = TOK_IF;
-        else if (strcmp(current_token.lexeme, "else")  == 0)  current_token.type = TOK_ELSE;
-        else if (strcmp(current_token.lexeme, "while") == 0)  current_token.type = TOK_WHILE;
-        else if (strcmp(current_token.lexeme, "print") == 0)  current_token.type = TOK_PRINT;
-        else if (strcmp(current_token.lexeme, "int")   == 0)  current_token.type = TOK_INT;
-        else if (strcmp(current_token.lexeme, "float") == 0)  current_token.type = TOK_FLOAT;
-        else if (strcmp(current_token.lexeme, "void")  == 0)  current_token.type = TOK_VOID;
-        else                                                  current_token.type = TOK_ID;
+        if      (strcmp(current_token.lexeme, "if")     == 0)  current_token.type = TOK_IF;
+        else if (strcmp(current_token.lexeme, "else")   == 0)  current_token.type = TOK_ELSE;
+        else if (strcmp(current_token.lexeme, "while")  == 0)  current_token.type = TOK_WHILE;
+        else if (strcmp(current_token.lexeme, "print")  == 0)  current_token.type = TOK_PRINT;
+        else if (strcmp(current_token.lexeme, "int")    == 0)  current_token.type = TOK_INT;
+        else if (strcmp(current_token.lexeme, "float")  == 0)  current_token.type = TOK_FLOAT;
+        else if (strcmp(current_token.lexeme, "void")   == 0)  current_token.type = TOK_VOID;
+        else if (strcmp(current_token.lexeme, "bool")   == 0)  current_token.type = TOK_BOOL;
+        else if (strcmp(current_token.lexeme, "class")  == 0)  current_token.type = TOK_CLASS;
+        else if (strcmp(current_token.lexeme, "return") == 0)  current_token.type = TOK_RETURN;
+        else                                                   current_token.type = TOK_ID;
         return;
     }
 ```
 
-`advance()` is the **lexer (tokeniser)** — the heart of Phase 1. Each call consumes enough characters from `input_ptr` to produce exactly one token and stores the result in `current_token`. The function begins by **skipping whitespace**: the `while (isspace(*input_ptr))` loop advances past spaces, tabs, and newlines. The newline check `if (*input_ptr == '\n') current_line++` accurately tracks source line numbers. After skipping whitespace, `current_token.line = current_line` stamps the line onto the token. The null-terminator check `if (*input_ptr == '\0')` detects **end of input** and produces a `TOK_EOF` sentinel. The identifier section starts with `if (isalpha(*input_ptr) || *input_ptr == '_')` which matches any word-start character. The inner `while` loop then accumulates up to 63 characters. After the loop, a chain of `strcmp` comparisons checks whether the word is one of the seven **reserved keywords** (`if`, `else`, `while`, `print`, `int`, `float`, `void`); if none match, it is classified as `TOK_ID`. The `void` keyword comparison produces `TOK_VOID`, enabling the parser to recognise function/procedure definitions.
+`advance()` is the **lexer (tokeniser)** — the heart of Phase 1. Each call consumes enough characters from `input_ptr` to produce exactly one token and stores the result in `current_token`. The function begins by **skipping whitespace**: the `while (isspace(*input_ptr))` loop advances past spaces, tabs, and newlines. The newline check `if (*input_ptr == '\n') current_line++` accurately tracks source line numbers. After skipping whitespace, `current_token.line = current_line` stamps the line onto the token. The null-terminator check `if (*input_ptr == '\0')` detects **end of input** and produces a `TOK_EOF` sentinel. The identifier section starts with `if (isalpha(*input_ptr) || *input_ptr == '_')` which matches any word-start character. The inner `while` loop then accumulates up to 63 characters. After the loop, a chain of `strcmp` comparisons checks whether the word is one of the **ten reserved keywords** (`if`, `else`, `while`, `print`, `int`, `float`, `void`, `bool`, `class`, `return`); if none match, it is classified as `TOK_ID`. The `bool` keyword produces `TOK_BOOL` for boolean type declarations, `class` produces `TOK_CLASS` for class definitions like `class Foo { ... }`, and `return` produces `TOK_RETURN` for return statements like `return value + b;`.
 
 ---
 
-### Lines 302–370 — `advance()` — Numeric Literals and Operators
+### Lines 315–385 — `advance()` — Numeric Literals and Operators
 
 ```c
     if (isdigit(*input_ptr)) {
@@ -444,11 +461,9 @@ void advance(void) {
     switch (*input_ptr) {
         case '(': current_token.type = TOK_LPAREN; input_ptr++; break;
         ...
-        case '=':
-            input_ptr++;
-            if (*input_ptr == '=') { current_token.type = TOK_EQ; strcpy(..., "=="); input_ptr++; }
-            else { current_token.type = TOK_ASSIGN; }
-            break;
+        case ';': current_token.type = TOK_SEMI;   input_ptr++; break;
+        case ',': current_token.type = TOK_COMMA;  input_ptr++; break;
+        case ':': current_token.type = TOK_COLON;  input_ptr++; break;
         ...
         default:
             current_token.type = TOK_ERROR; input_ptr++; break;
@@ -456,7 +471,7 @@ void advance(void) {
 }
 ```
 
-The **numeric literal** section handles both integers and floats. The first `while (isdigit(*input_ptr))` loop gathers the integer part. Then `if (*input_ptr == '.')` peeks at the next character: if it is a dot, the dot is appended and a second `while` loop gathers the fractional digits. This correctly tokenises values like `15`, `3`, and `5.0`. Both produce `TOK_NUM`. For **single-character operators** like `(`, `)`, `+`, `-`, etc., the lexeme is pre-set before the switch. Simple operators are handled with one-liner cases. **Two-character operators** (`==`, `<=`, `>=`, `!=`, `&&`, `||`) require a **lookahead**: the first character is consumed with `input_ptr++`, then the next character is checked. If it matches the expected second character, the two-character token is produced; otherwise the single-character version (or `TOK_ERROR`) is produced. The `default` arm handles **unknown characters** by generating `TOK_ERROR` and advancing so tokenisation can continue.
+The **numeric literal** section handles both integers and floats. The first `while (isdigit(*input_ptr))` loop gathers the integer part. Then `if (*input_ptr == '.')` peeks at the next character: if it is a dot, the dot is appended and a second `while` loop gathers the fractional digits. This correctly tokenises values like `15`, `3`, and `5.0`. Both produce `TOK_NUM`. For **single-character operators** like `(`, `)`, `+`, `-`, etc., the lexeme is pre-set before the switch. Simple operators are handled with one-liner cases. The `,` (comma) and `:` (colon) characters are now recognised as `TOK_COMMA` and `TOK_COLON` respectively — the comma enables **comma-separated declarations** like `float x, y;` and **function parameter lists** like `(int a, float b)`, while the colon enables **label definitions** like `l:`. **Two-character operators** (`==`, `<=`, `>=`, `!=`, `&&`, `||`) require a **lookahead**: the first character is consumed with `input_ptr++`, then the next character is checked. If it matches the expected second character, the two-character token is produced; otherwise the single-character version (or `TOK_ERROR`) is produced. The `default` arm handles **unknown characters** by generating `TOK_ERROR` and advancing so tokenisation can continue.
 
 ---
 
@@ -502,7 +517,7 @@ void run_lexical_analysis(char *src) {
 
 ---
 
-### Lines 422–447 — Parser Forward Declarations and `match()`
+### Lines 437–462 — Parser Forward Declarations and `match()`
 
 ```c
 /* Forward declarations */
@@ -510,6 +525,8 @@ void parse_BoolExpr(void);
 void parse_StmtList(void);
 void parse_Stmt(void);
 void parse_Block(void);
+void parse_ClassDef(void);
+void parse_ReturnStmt(void);
 
 /* match: consume a token of expected type, report syntax error otherwise */
 void match(TokenType expected) {
@@ -523,7 +540,7 @@ void match(TokenType expected) {
 }
 ```
 
-The **forward declarations** are necessary because the parser functions call each other in a mutually recursive way — without them the C compiler would see unknown function names. All four forward-declared functions return `void` because this version of the compiler does **not** build a parse tree; instead it validates syntax and operates on the symbol table as a side effect.
+The **forward declarations** are necessary because the parser functions call each other in a mutually recursive way — without them the C compiler would see unknown function names. All six forward-declared functions return `void` because this version of the compiler does **not** build a parse tree; instead it validates syntax and operates on the symbol table as a side effect. The two new forward declarations are `parse_ClassDef()` (for class definitions like `class Foo { ... }`) and `parse_ReturnStmt()` (for return statements).
 
 `match()` is the **gatekeeper** of the recursive-descent parser. If `current_token.type == expected`, the match succeeds: `advance()` is called to consume the current token and move to the next one. If types do not match, **Phase 3 syntax error detection** activates: the exact line number, expected token (converted to a readable string by `token_type_to_string()`), and the actual token are printed in a clear error message, and `exit(1)` terminates the program immediately. This "exit on first error" strategy is typical of teaching compilers — it stops at the first grammar violation rather than attempting error recovery.
 
@@ -658,25 +675,52 @@ void parse_BoolExpr(void) {
 
 ---
 
-### Lines 524–567 — `parse_DeclOrFunc()` — Declaration OR Function/Procedure Definition
+### Lines 527–575 — `parse_ParamList()` — Function Parameter Parsing
 
 ```c
-/*
- * parse_DeclOrFunc() handles both:
- *   1. Variable declaration:    int x;   or   float avg;
- *   2. Function/procedure def:  void pro_one() { ... }  or  int func() { ... }
- *
- * After consuming the type keyword and the identifier, we peek at the next
- * token: if it is '(' then this is a function/procedure definition --
- * the name is inserted into the symbol table with type "proc",
- * then the parameter list (currently empty) and the body block are parsed.
- * Otherwise it is a normal variable declaration.
- */
+void parse_ParamList(void) {
+    /* If immediately ')' → no parameters */
+    if (current_token.type == TOK_RPAREN) return;
+
+    /* First parameter */
+    if (current_token.type == TOK_INT || current_token.type == TOK_FLOAT ||
+        current_token.type == TOK_VOID || current_token.type == TOK_BOOL) {
+        char ptype[16];
+        strcpy(ptype, current_token.lexeme);
+        match(current_token.type);
+
+        char pname[64];
+        strncpy(pname, current_token.lexeme, 63); pname[63] = '\0';
+        match(TOK_ID);
+        insert_symbol(pname, ptype);
+
+        /* Additional parameters separated by ',' */
+        while (current_token.type == TOK_COMMA) {
+            match(TOK_COMMA);
+            strcpy(ptype, current_token.lexeme);
+            if (current_token.type == TOK_INT || ...) {
+                match(current_token.type);
+            }
+            strncpy(pname, current_token.lexeme, 63); pname[63] = '\0';
+            match(TOK_ID);
+            insert_symbol(pname, ptype);
+        }
+    }
+}
+```
+
+`parse_ParamList()` is a **new function** that parses **typed function parameters** inside parentheses. It supports both single parameters like `(int m)` and comma-separated lists like `(int a, float b)`. If the first token after `(` is `)`, the function returns immediately — indicating an empty parameter list. Otherwise, it expects a type keyword followed by an identifier, inserts the parameter into the symbol table, and then loops on commas to handle additional parameters. Parameters are inserted into the **function body scope** because `push_scope()` is called *before* `parse_ParamList()` in `parse_DeclOrFunc()`, ensuring parameters live inside the function's scope rather than the enclosing scope.
+
+---
+
+### Lines 577–616 — `parse_DeclOrFunc()` — Declaration OR Function/Procedure Definition
+
+```c
 void parse_DeclOrFunc(void) {
     if (current_token.type == TOK_INT || current_token.type == TOK_FLOAT ||
-        current_token.type == TOK_VOID) {
+        current_token.type == TOK_VOID || current_token.type == TOK_BOOL) {
         char declared_type[16];
-        strcpy(declared_type, current_token.lexeme);   /* "int", "float", or "void" */
+        strcpy(declared_type, current_token.lexeme);
         match(current_token.type);
 
         char name[64];
@@ -684,14 +728,30 @@ void parse_DeclOrFunc(void) {
         match(TOK_ID);
 
         if (current_token.type == TOK_LPAREN) {
-            /* -- Function / Procedure definition -- */
+            /* ── Function / Procedure definition ── */
             insert_symbol(name, "proc");
             match(TOK_LPAREN);
+            push_scope();
+            parse_ParamList();
             match(TOK_RPAREN);
-            parse_Block();   /* pushes a new scope for the function body */
+            match(TOK_LBRACE);
+            parse_StmtList();
+            print_all_scopes();
+            pop_scope();
+            match(TOK_RBRACE);
         } else {
-            /* -- Variable declaration -- */
+            /* ── Variable declaration ── */
             insert_symbol(name, declared_type);
+
+            /* Support comma-separated declarations:  int x, y, z; */
+            while (current_token.type == TOK_COMMA) {
+                match(TOK_COMMA);
+                char extra_name[64];
+                strncpy(extra_name, current_token.lexeme, 63);
+                extra_name[63] = '\0';
+                match(TOK_ID);
+                insert_symbol(extra_name, declared_type);
+            }
 
             if (current_token.type == TOK_ASSIGN) {
                 match(TOK_ASSIGN);
@@ -703,15 +763,15 @@ void parse_DeclOrFunc(void) {
 }
 ```
 
-`parse_DeclOrFunc()` is the **primary integration point between the parser and the symbol table**. It handles **both** variable declarations (`int x;`, `float avg;`) **and** function/procedure definitions (`void pro_one() { ... }`, `int compute() { ... }`). The function begins by checking if the current token is a type keyword (`TOK_INT`, `TOK_FLOAT`, or `TOK_VOID`). The type keyword's text is captured into `declared_type` *before* calling `match()` — this is necessary because `match()` calls `advance()` which overwrites `current_token`. Similarly, `name` is copied before `match(TOK_ID)`, which consumes the identifier.
+`parse_DeclOrFunc()` is the **primary integration point between the parser and the symbol table**. It handles **both** variable declarations (`int x;`, `float avg;`, `bool t;`) **and** function/procedure definitions (`void f(int m) { ... }`, `int g(int n) { ... }`). The function now also recognises `TOK_BOOL` as a valid type keyword, in addition to `TOK_INT`, `TOK_FLOAT`, and `TOK_VOID`.
 
-The critical **decision point** is the next token after the identifier: if it is `(` (a left parenthesis), this is a **function/procedure definition**. In that case, `insert_symbol(name, "proc")` inserts the function name into the current scope with type `"proc"` — matching the symbol table layout from the lecture slides where procedures like `pro_one` and `pro_two` appear in the global scope with type `proc`. Then `match(TOK_LPAREN)` and `match(TOK_RPAREN)` consume the empty parameter list, and `parse_Block()` parses the function body — which pushes a new scope, allowing the function's local variables to live in their own scope.
+The critical **decision point** is the next token after the identifier: if it is `(` (a left parenthesis), this is a **function/procedure definition**. In that case, `insert_symbol(name, "proc")` inserts the function name into the current scope with type `"proc"`. Then `match(TOK_LPAREN)` consumes `(`, `push_scope()` creates the function body scope, `parse_ParamList()` inserts parameters into that scope, and `match(TOK_RPAREN)` consumes `)`. The function body is then parsed inline with `match(TOK_LBRACE)`, `parse_StmtList()`, `print_all_scopes()`, `pop_scope()`, `match(TOK_RBRACE)` — this approach pushes the scope *before* parsing parameters so that parameters live inside the function scope as local variables.
 
-If the next token is **not** `(`, the statement is a **normal variable declaration**: `insert_symbol(name, declared_type)` registers the variable with its actual type (`"int"` or `"float"`). An optional initialisation (`int x = expr;`) is supported — if `=` follows, the right-hand expression is parsed via `parse_BoolExpr()`. Finally, `match(TOK_SEMI)` consumes the terminating semicolon.
+If the next token is **not** `(`, the statement is a **normal variable declaration**. After inserting the first variable, a new `while (current_token.type == TOK_COMMA)` loop handles **comma-separated declarations** — for example, `float x, y;` declares both `x` and `y` as `float`. Each comma consumes the separator, reads the next identifier name, and inserts it into the symbol table with the same type. Optional initialisation (`int x = expr;`) remains supported. Finally, `match(TOK_SEMI)` consumes the terminating semicolon.
 
 ---
 
-### Lines 549–570 — `parse_AssignStmt()` and `parse_Block()`
+### Lines 618–637 — `parse_AssignStmt()` and `parse_Block()`
 
 ```c
 void parse_AssignStmt(void) {
@@ -744,7 +804,47 @@ void parse_Block(void) {
 
 ---
 
-### Lines 572–625 — Statement Parsers and Top-Level List
+### Lines 655–669 — `parse_ReturnStmt()` — Return Statements
+
+```c
+void parse_ReturnStmt(void) {
+    match(TOK_RETURN);
+    /* Optional return value — if next token is not ';', parse an expression */
+    if (current_token.type != TOK_SEMI) {
+        parse_BoolExpr();
+    }
+    match(TOK_SEMI);
+}
+```
+
+`parse_ReturnStmt()` is a **new function** that handles `return` statements with optional return values. After matching the `return` keyword, it peeks at the next token: if it is not `;`, the function parses a return value expression via `parse_BoolExpr()`. This supports both `return;` (void return) and `return value + b;` (return with an expression). All variables referenced in the return expression are looked up in the symbol table via `parse_BoolExpr()` → `parse_Factor()` → `searchSym()`, ensuring proper scope resolution.
+
+---
+
+### Lines 671–685 — `parse_ClassDef()` — Class Definitions
+
+```c
+void parse_ClassDef(void) {
+    match(TOK_CLASS);
+    char class_name[64];
+    strncpy(class_name, current_token.lexeme, 63); class_name[63] = '\0';
+    match(TOK_ID);
+    insert_symbol(class_name, "class");
+    /* Class body — same as a block but also parses declarations/methods */
+    match(TOK_LBRACE);
+    push_scope();
+    parse_StmtList();
+    print_all_scopes();
+    pop_scope();
+    match(TOK_RBRACE);
+}
+```
+
+`parse_ClassDef()` is a **new function** that handles class definitions like `class Foo { ... }`. It matches the `class` keyword, reads the class name, and inserts the class name into the **current scope** with type `"class"`. The class body is then parsed as a scoped block: `push_scope()` creates a new scope for class members, `parse_StmtList()` parses declarations and method definitions inside the class body, `print_all_scopes()` takes a snapshot, and `pop_scope()` drops the class scope when `}` is encountered. Inside the class body, member variables (like `int value;`) and methods (like `int test() { ... }` or `void setValue(int c) { ... }`) are all handled by the existing `parse_Stmt()` dispatcher.
+
+---
+
+### Lines 687–770 — Statement Parsers and Top-Level List
 
 ```c
 void parse_IfStmt(void) {
@@ -765,13 +865,15 @@ void parse_PrintStmt(void) { /* print ( BoolExpr ) ; */ }
 
 void parse_Stmt(void) {
     /* Dispatcher: peek at current token to decide which statement follows */
-    if      (INT, FLOAT, or VOID)  -> parse_DeclOrFunc()
-    else if (TOK_ID)               -> parse_AssignStmt()
-    else if (TOK_IF)               -> parse_IfStmt()
-    else if (TOK_WHILE)            -> parse_WhileStmt()
-    else if (TOK_PRINT)            -> parse_PrintStmt()
-    else if (TOK_LBRACE)           -> parse_Block()
-    else                           -> syntax error + exit(1)
+    if      (INT, FLOAT, VOID, BOOL)  -> parse_DeclOrFunc()
+    else if (TOK_CLASS)               -> parse_ClassDef()
+    else if (TOK_RETURN)              -> parse_ReturnStmt()
+    else if (TOK_ID)                  -> label / assignment / expression stmt
+    else if (TOK_IF)                  -> parse_IfStmt()
+    else if (TOK_WHILE)              -> parse_WhileStmt()
+    else if (TOK_PRINT)              -> parse_PrintStmt()
+    else if (TOK_LBRACE)             -> parse_Block()
+    else                              -> syntax error + exit(1)
 }
 
 void parse_StmtList(void) {
@@ -786,7 +888,7 @@ void parse_StmtList(void) {
 
 `parse_PrintStmt()` matches `print ( BoolExpr ) ;` — a built-in function call with exactly one argument. It uses `match()` for `print`, `(`, `)`, and `;`, with `parse_BoolExpr()` for the argument expression.
 
-`parse_Stmt()` is the **dispatcher** — it peeks at the current token to decide which parse function to call. This is **predictive parsing**: because each statement type starts with a distinct token, the parser can always make the right choice with one token of lookahead, without backtracking. `TOK_INT`/`TOK_FLOAT`/`TOK_VOID` → declaration or function definition (handled by `parse_DeclOrFunc()`), `TOK_ID` → assignment, `TOK_IF` → if statement, `TOK_WHILE` → while loop, `TOK_PRINT` → print statement, `TOK_LBRACE` → standalone block. If none match, a syntax error is reported.
+`parse_Stmt()` is the **dispatcher** — it peeks at the current token to decide which parse function to call. This is **predictive parsing**: because each statement type starts with a distinct token, the parser can always make the right choice with one token of lookahead, without backtracking. `TOK_INT`/`TOK_FLOAT`/`TOK_VOID`/`TOK_BOOL` → declaration or function definition (handled by `parse_DeclOrFunc()`), `TOK_CLASS` → class definition (handled by `parse_ClassDef()`), `TOK_RETURN` → return statement (handled by `parse_ReturnStmt()`). For `TOK_ID`, the parser now uses a **two-token lookahead**: it consumes the identifier and checks what follows — if `:` (colon), it is a **label definition** (printed with `[LABEL]` and no symbol table insertion); if `=` (assignment), it is an **assignment statement** (with `searchSym` for declaration checking); otherwise it is treated as a standalone expression statement. `TOK_IF` → if statement, `TOK_WHILE` → while loop, `TOK_PRINT` → print statement, `TOK_LBRACE` → standalone block. If none match, a syntax error is reported.
 
 `parse_StmtList()` repeatedly calls `parse_Stmt()` until it sees `}` (end-of-block) or `EOF` (end-of-file) — making the statement list a **zero-or-more repetition**.
 
@@ -893,37 +995,76 @@ When the while-block's `}` is encountered, `pop_scope()` drops scope 1 (and its 
 
 ## Function/Procedure Support — How Functions Are Treated in the Symbol Table
 
-The compiler supports **function/procedure definitions** using the syntax `type name() { body }`. When the parser encounters a type keyword (`int`, `float`, or `void`) followed by an identifier and then a `(`, it recognises this as a function/procedure definition rather than a variable declaration. For example:
+The compiler supports **function/procedure definitions** using the syntax `type name(params) { body }`. When the parser encounters a type keyword (`int`, `float`, `void`, or `bool`) followed by an identifier and then a `(`, it recognises this as a function/procedure definition rather than a variable declaration. **Function parameters** are fully supported — the compiler parses typed parameter lists like `(int m)` or `(int a, float b)`. For example:
 
 ```c
-int value;
-value = 10;
+int x;
 
-void pro_one() {
-    int one_1;
-    int one_2;
-    {
-        int one_3;
-        int one_4;
-    }
-    int one_5;
+void f(int m) {
+    float x, y;
+    { int i, j; }
+    { int x; l: }
+}
+
+int g(int n) {
+    bool t;
 }
 ```
 
-The function name `pro_one` is inserted into the **global scope** with type `"proc"` — exactly as shown in the lecture slides where the global symbol table contains:
+The function name `f` is inserted into the **global scope** with type `"proc"`. When the function body is entered, a new scope is pushed — then parameters (like `m`) are inserted into ***that*** scope via `parse_ParamList()`, so parameters live inside the function's scope. The global symbol table contains:
 
 ```
 | Name       Type     Scope  Offset  |
-| value      int      0      0       |
-| pro_one    proc     0      4       |
+| x          int      0      0       |
+| f          proc     0      4       |
+| g          proc     0      32      |
 ```
 
-When the function body `{ ... }` is parsed by `parse_Block()`, a new scope is pushed — so the local variables `one_1`, `one_2`, `one_5` get their own scope level (e.g. level 1). Any nested blocks inside the function (like `{ int one_3; int one_4; }`) push additional inner scope levels. When those blocks close, their scope nodes are popped and the local variables are dropped — but the function name `pro_one` persists in the global scope because it was inserted before the body was entered.
+Inside function `f`, the parameter `m` and local variables `x`, `y` (declared via comma-separated syntax `float x, y;`) all live in scope level 1. Nested blocks like `{ int i, j; }` push additional inner scopes. The `l:` label is recognised but does not insert a symbol — labels are simply acknowledged. When blocks close, their scope nodes are popped and local variables are dropped — but the function names persist in the global scope.
 
-The `searchSym()` function can look up function names just like variables. After parsing completes, searching for `pro_one` in Phase 5 returns:
+---
+
+## Class Support — How Classes Are Treated in the Symbol Table
+
+The compiler supports **class definitions** using the syntax `class ClassName { members }`. When the parser encounters the `class` keyword, `parse_ClassDef()` consumes the class name, inserts it into the current scope with type `"class"`, then parses the class body as a scoped block. For example:
+
+```c
+class Foo {
+    int value;
+    int test() {
+        int b = 3;
+        return value + b;
+    }
+    void setValue(int c) {
+        value = c;
+        {
+            int d = c;
+            c = c + d;
+            value = c;
+        }
+    }
+}
 ```
-  [ST] LOOKUP 'pro_one': FOUND in scope 0 -- type=proc, offset=4
-```
+
+The class name `Foo` is inserted into scope 0 with type `"class"`. The class body gets scope level 1, where member variables (`value`) and methods (`test`, `setValue`) are declared. Method bodies get their own nested scopes, and parameters (like `c` in `setValue`) are correctly inserted into the method scope. Variable lookups inside methods correctly resolve to class members via the scope chain — e.g. `value` used inside `test()` is found in scope 1.
+
+---
+
+## Comma-Separated Declarations
+
+The compiler supports **comma-separated variable declarations** like `float x, y;` and `int i, j;`. When `parse_DeclOrFunc()` encounters a comma after the first variable name, it loops to read additional identifiers, inserting each with the same type. This avoids requiring separate declaration statements for every variable.
+
+---
+
+## Label Support
+
+The compiler recognises **labels** like `l:` in source code. When `parse_Stmt()` encounters an identifier followed by `:`, it treats it as a label definition rather than an assignment or expression. A `[LABEL]` message is printed to the terminal, and parsing continues with any subsequent statement. Labels do not insert entries into the symbol table.
+
+---
+
+## Return Statement Support
+
+The compiler handles **return statements** with optional return values. `return;` produces a void return, while `return expr;` parses the expression and resolves all variable references through `searchSym()`. This allows the compiler to process Java/C-style method bodies that end with `return value + b;`.
 
 ---
 
@@ -933,7 +1074,7 @@ The `searchSym()` function can look up function names just like variables. After
 |---|---|---|
 | `push_scope()` | ST | Push a new scope node when `{` is encountered |
 | `pop_scope()` | ST | Pop current scope node when `}` is encountered |
-| `insert_symbol()` | ST | Add a variable or function to the current scope |
+| `insert_symbol()` | ST | Add a variable, function, or class to the current scope |
 | `searchSym()` | ST | Look up a symbol walking up the scope chain |
 | `print_all_scopes()` | ST | Print a vertical snapshot of all active scopes |
 | `token_type_to_string()` | Lex | Map enum to human-readable token name |
@@ -948,12 +1089,15 @@ The `searchSym()` function can look up function names just like variables. After
 | `parse_EqExpr()` | Syn | Parse `==`, `!=` |
 | `parse_AndExpr()` | Syn | Parse `&&` |
 | `parse_BoolExpr()` | Syn | Parse `\|\|` -- top of expression hierarchy |
-| `parse_DeclOrFunc()` | Syn+ST | Parse `type id;` (variable) or `type id() block` (function) |
+| `parse_ParamList()` | Syn+ST | Parse typed function parameters `(int m, float x)` |
+| `parse_DeclOrFunc()` | Syn+ST | Parse `type id;` (var), `type id, id;` (comma), or `type id(params) block` (func) |
 | `parse_AssignStmt()` | Syn+ST | Parse `id = expr;` and lookup in symbol table |
 | `parse_Block()` | Syn+ST | Parse `{ stmts }` and push/pop scope |
 | `parse_IfStmt()` | Syn | Parse `if (cond) block [else block]` |
 | `parse_WhileStmt()` | Syn | Parse `while (cond) block` |
 | `parse_PrintStmt()` | Syn | Parse `print(expr);` |
-| `parse_Stmt()` | Syn | Dispatch to the correct statement parser |
+| `parse_ReturnStmt()` | Syn+ST | Parse `return;` or `return expr;` |
+| `parse_ClassDef()` | Syn+ST | Parse `class Name { members }` with scoped body |
+| `parse_Stmt()` | Syn | Dispatch: decl/func, class, return, label, assign, if, while, print, block |
 | `parse_StmtList()` | Syn | Parse zero or more statements |
 | `main()` | All | Orchestrate all five compiler phases |

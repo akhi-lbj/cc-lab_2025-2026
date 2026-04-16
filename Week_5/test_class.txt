@@ -1,0 +1,15 @@
+class Foo {
+    int value;
+    int test() {
+    int b = 3;
+    return value + b;
+    }
+    void setValue(int c) {
+    value = c;
+    {
+    int d = c;
+    c = c + d;
+    value = c;
+    }
+    }
+}
