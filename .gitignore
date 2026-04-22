@@ -7,6 +7,7 @@
 # Except for the Week_4 directory
 !Week_4/
 !Week_5/
+!Week_6/
 
 # Files to ignore
 Week_4/2023A7PS0013U_Akhil_Week_4_Parser_Implementation.c
