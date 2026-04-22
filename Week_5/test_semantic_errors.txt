@@ -15,6 +15,7 @@ void main() {
     d = 20;  /* ERROR: Use of undeclared variable 'd' */
 
     if (a + b) { /* ERROR: Non-boolean condition (arithmetic) */
+        int a;
         print(a);
     }
 
