@@ -991,7 +991,7 @@ static int quad_count = 0;
 
 /* ── Triples table (NEW FEATURE) ─────────────────────────────────── */
 typedef struct {
-  int index; // Uses -1 to represent labels visually without advancing index
+  int index; 
   char op[16];
   char arg1[64];
   char arg2[64];

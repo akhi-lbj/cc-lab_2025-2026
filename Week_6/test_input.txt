@@ -2,6 +2,7 @@ int a;
 int b;
 int sum;
 float avg;
+a = 4.5;
 a = 2 * (3 + 4);
 b = 15;
 sum = 0;
