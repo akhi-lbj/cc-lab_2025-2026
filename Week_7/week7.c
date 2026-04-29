@@ -2131,9 +2131,11 @@ int main(int argc, char **argv) {
 
   analyze(root);
 
+  /* Check for semantic errors BEFORE printing symbol table */
   if (has_error || sem_error_count > 0) {
     printf("\n [FAIL] %d semantic error(s) detected. Compilation halted.\n", 
            sem_error_count);
+    printf(" *** Symbol table generation aborted due to semantic error(s).\n");
     pop_scope();
     return 1;
   } else {
@@ -2148,12 +2150,18 @@ int main(int argc, char **argv) {
     generate_tac(root);
     print_tac();
     print_quadruples();
+  } else {
+    printf("\n [SKIP] TAC generation aborted due to earlier error(s).\n");
+    printf(" *** Intermediate code generation skipped.\n");
   }
 
   /* Phase 7: Triples - only if no errors so far */
   if (!has_error) {
     build_triples();
     print_triples();
+  } else {
+    printf("\n [SKIP] Triples generation aborted due to earlier error(s).\n");
+    printf(" *** Triples table generation skipped.\n");
   }
 
   /* Phase 8: Optimization - only if no errors so far */
@@ -2161,24 +2169,32 @@ int main(int argc, char **argv) {
     optimize_quadruples();
     print_optimized_quadruples();
     print_target_code();
+  } else {
+    printf("\n [SKIP] Code optimization aborted due to earlier error(s).\n");
+    printf(" *** Code optimization skipped.\n");
   }
 
-  printf("\n+=================================================================="
-         "==+\n");
-  printf("| INTERACTIVE SYMBOL TABLE LOOKUP                                    "
-         "|\n");
-  printf("| Enter a variable name to look up. Type 'q' to exit.               "
-         "|\n");
-  printf("+===================================================================="
-         "+\n");
-  char search_var[64];
-  while (1) {
-    printf("\n  Search variable >>> ");
-    if (scanf("%63s", search_var) != 1)
-      break;
-    if (strcmp(search_var, "q") == 0 || strcmp(search_var, "quit") == 0)
-      break;
-    searchSym(top, search_var);
+  /* Only allow interactive lookup if no errors occurred */
+  if (!has_error) {
+    printf("\n+===================================================================="
+           "==+\n");
+    printf("| INTERACTIVE SYMBOL TABLE LOOKUP                                    "
+           "|\n");
+    printf("| Enter a variable name to look up. Type 'q' to exit.               "
+           "|\n");
+    printf("+===================================================================="
+           "+\n");
+    char search_var[64];
+    while (1) {
+      printf("\n  Search variable >>> ");
+      if (scanf("%63s", search_var) != 1)
+        break;
+      if (strcmp(search_var, "q") == 0 || strcmp(search_var, "quit") == 0)
+        break;
+      searchSym(top, search_var);
+    }
+  } else {
+    printf("\n [SKIP] Interactive symbol table lookup skipped due to error(s).\n");
   }
 
   pop_scope();
