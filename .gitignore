@@ -3,24 +3,43 @@
 *.o
 *.obj
 *.out
+*.exe
+*.dll
+*.so
+*.a
 
 # Dependencies
 __pycache__/
 *.pyc
 *.pyo
-*.pyd
+.Python
+venv/
+.venv/
+.env
+.env.local
+*.env.*
 
 # Logs and temp files
 *.log
 *.tmp
 *.swp
+*.swo
 
 # Editors
 .vscode/
 .idea/
 
-# Environment
-.env
-.env.local
-*.env.*
+# System files
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+coverage/
+htmlcov/
+.coverage
+
+# Build directories
+dist/
+build/
+target/
 ```
