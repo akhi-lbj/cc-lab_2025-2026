@@ -86,6 +86,8 @@ int scope_counter = 0;
 int global_offset = 0;
 int lex_error_count = 0;
 int sem_error_count = 0;
+int syntax_error_count = 0;
+int has_error = 0; /* Global error flag: if set, stop all further processing */
 
 void push_scope(void) {
   ScopeNode *nn = (ScopeNode *)malloc(sizeof(ScopeNode));
@@ -170,8 +172,30 @@ void print_all_scopes(void) {
 
 void sem_error(int line, const char *msg) {
   sem_error_count++;
+  has_error = 1;
   printf("  [SEMANTIC ERROR #%d] Line %d: %s\n", sem_error_count, line, msg);
-  exit(1);
+}
+
+void syntax_error(int line, const char *msg) {
+  syntax_error_count++;
+  has_error = 1;
+  printf("  [SYNTAX ERROR #%d] Line %d: %s\n", syntax_error_count, line, msg);
+}
+
+void lex_error(int line, const char *msg) {
+  lex_error_count++;
+  has_error = 1;
+  printf("  [LEXICAL ERROR #%d] Line %d: %s\n", lex_error_count, line, msg);
+}
+
+void tac_error(int line, const char *msg) {
+  has_error = 1;
+  printf("  [TAC GENERATION ERROR #%d] Line %d: %s\n", 1, line, msg);
+}
+
+void optimize_error(int line, const char *msg) {
+  has_error = 1;
+  printf("  [OPTIMIZATION ERROR #%d] Line %d: %s\n", 1, line, msg);
 }
 
 /* ========================================================================
@@ -508,6 +532,8 @@ int run_lexical_analysis(char *src) {
 
   if (current_token.type == TOK_ERROR) {
     lex_error_count = 1;
+    has_error = 1;
+    lex_error(current_token.line, current_token.lexeme);
     printf("+===================================================================="
            "+\n");
     printf(" *** Lexical Error on line %d: Invalid token '%s'\n\n",
@@ -535,9 +561,10 @@ void match(TokenType expected) {
   if (current_token.type == expected) {
     advance();
   } else {
-    printf("\n *** Syntax Error on line %d: Expected token %d, got '%s'\n",
+    syntax_error(current_token.line, 
+      "Expected token, got unexpected token");
+    printf(" *** Syntax Error on line %d: Expected token %d, got '%s'\n",
            current_token.line, expected, current_token.lexeme);
-    exit(1);
   }
 }
 
@@ -580,10 +607,10 @@ ASTNode *parse_Factor(void) {
     node->children[0] = parse_Factor();
     node->child_count = 1;
   } else {
+    syntax_error(current_token.line, "Unexpected token in expression");
     printf(
-        "\n *** Syntax Error on line %d: Unexpected token '%s' in expression\n",
+        " *** Syntax Error on line %d: Unexpected token '%s' in expression\n",
         current_token.line, current_token.lexeme);
-    exit(1);
   }
   return node;
 }
@@ -2056,8 +2083,10 @@ int main(int argc, char **argv) {
   printf("INPUT PROGRAM:\n");
   printf("----------------------------------------\n%s\n", source);
 
-  if (run_lexical_analysis(source) != 0)
+  if (run_lexical_analysis(source) != 0) {
+    printf("\n [FAIL] Compilation halted due to lexical error(s).\n");
     return 1;
+  }
 
   printf("+===================================================================="
          "+\n");
@@ -2075,9 +2104,18 @@ int main(int argc, char **argv) {
   push_scope();
   ASTNode *root = parse_StmtList();
 
+  if (has_error) {
+    printf("\n [FAIL] Compilation halted due to syntax error(s).\n");
+    pop_scope();
+    return 1;
+  }
+
   if (current_token.type != TOK_EOF) {
-    printf("\n *** Syntax Error: Extraneous tokens after program end: '%s'\n",
+    syntax_error(current_token.line, "Extraneous tokens after program end");
+    printf(" *** Syntax Error: Extraneous tokens after program end: '%s'\n",
            current_token.lexeme);
+    printf("\n [FAIL] Compilation halted due to syntax error(s).\n");
+    pop_scope();
     return 1;
   }
   printf("\n [OK] Parsing completed — syntax is valid.\n\n");
@@ -2093,26 +2131,37 @@ int main(int argc, char **argv) {
 
   analyze(root);
 
-  if (sem_error_count == 0) {
-    printf("\n [OK] Semantic analysis passed — no errors.\n");
+  if (has_error || sem_error_count > 0) {
+    printf("\n [FAIL] %d semantic error(s) detected. Compilation halted.\n", 
+           sem_error_count);
+    pop_scope();
+    return 1;
   } else {
-    printf("\n [FAIL] %d semantic error(s) detected.\n", sem_error_count);
+    printf("\n [OK] Semantic analysis passed — no errors.\n");
   }
 
   printf("\n --- Final Symbol Table (global scope) ---\n");
   print_all_scopes();
 
-  generate_tac(root);
-  print_tac();
-  print_quadruples();
+  /* Phase 6: TAC Generation - only if no errors so far */
+  if (!has_error) {
+    generate_tac(root);
+    print_tac();
+    print_quadruples();
+  }
 
-  // NEW PIPELINE STEPS FOR TRIPLES
-  build_triples();
-  print_triples();
+  /* Phase 7: Triples - only if no errors so far */
+  if (!has_error) {
+    build_triples();
+    print_triples();
+  }
 
-  optimize_quadruples();
-  print_optimized_quadruples();
-  print_target_code();
+  /* Phase 8: Optimization - only if no errors so far */
+  if (!has_error) {
+    optimize_quadruples();
+    print_optimized_quadruples();
+    print_target_code();
+  }
 
   printf("\n+=================================================================="
          "==+\n");
