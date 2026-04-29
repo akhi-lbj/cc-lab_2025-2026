@@ -87,7 +87,13 @@ int global_offset = 0;
 int lex_error_count = 0;
 int sem_error_count = 0;
 int syntax_error_count = 0;
-int has_error = 0; /* Global error flag: if set, stop all further processing */
+int has_error = 0; /**
+ * Create and push a new scope onto the global scope stack.
+ *
+ * Allocates a new ScopeNode, assigns it the next scope level, links it as the
+ * current top scope, increments the global scope counter, and prints a scope
+ * entry message.
+ */
 
 void push_scope(void) {
   ScopeNode *nn = (ScopeNode *)malloc(sizeof(ScopeNode));
@@ -170,29 +176,68 @@ void print_all_scopes(void) {
   printf(" +====================================================+\n\n");
 }
 
+/**
+ * Record a semantic error and report it.
+ *
+ * Increments the global semantic error counter, sets the global error flag
+ * to indicate compilation should stop, and prints a formatted semantic error
+ * message that includes the source line and the provided message.
+ *
+ * @param line Source line number where the error occurred.
+ * @param msg  Human-readable error message describing the problem.
+ */
 void sem_error(int line, const char *msg) {
   sem_error_count++;
   has_error = 1;
   printf("  [SEMANTIC ERROR #%d] Line %d: %s\n", sem_error_count, line, msg);
 }
 
+/**
+ * Record and report a syntax error and mark the compilation as having an error.
+ * @param line Source line number where the syntax error occurred.
+ * @param msg Human-readable description of the syntax error.
+ */
 void syntax_error(int line, const char *msg) {
   syntax_error_count++;
   has_error = 1;
   printf("  [SYNTAX ERROR #%d] Line %d: %s\n", syntax_error_count, line, msg);
 }
 
+/**
+ * Report a lexical error, print a standardized message, and mark the compilation as erroneous.
+ * @param line Source line number where the lexical error was detected.
+ * @param msg Human-readable description of the error.
+ * @note Increments the global `lex_error_count` and sets the global `has_error` flag.
+ */
 void lex_error(int line, const char *msg) {
   lex_error_count++;
   has_error = 1;
   printf("  [LEXICAL ERROR #%d] Line %d: %s\n", lex_error_count, line, msg);
 }
 
+/**
+ * Report a TAC-generation error and mark the global compilation error state.
+ *
+ * Sets the global `has_error` flag and prints a standardized TAC generation
+ * error message including the source line and provided message.
+ *
+ * @param line Source-line number where the error was detected.
+ * @param msg  Human-readable error description.
+ */
 void tac_error(int line, const char *msg) {
   has_error = 1;
   printf("  [TAC GENERATION ERROR #%d] Line %d: %s\n", 1, line, msg);
 }
 
+/**
+ * Report an optimization-phase error and mark compilation as having failed.
+ *
+ * Sets the global error flag and prints a formatted optimization error message
+ * including the source line and provided message.
+ *
+ * @param line Source line number where the error occurred.
+ * @param msg  Human-readable error message describing the problem.
+ */
 void optimize_error(int line, const char *msg) {
   has_error = 1;
   printf("  [OPTIMIZATION ERROR #%d] Line %d: %s\n", 1, line, msg);
@@ -502,6 +547,17 @@ static const char *token_category(TokenType t) {
   }
 }
 
+/**
+ * Runs lexical analysis on the given source text and prints a formatted token table.
+ *
+ * The function temporarily replaces the global lexer state, scans `src` until end-of-file
+ * or an invalid token, prints each token with its category and line, and then restores
+ * the previous lexer state. On encountering an invalid token it sets `lex_error_count`
+ * and `has_error`, and calls `lex_error`.
+ *
+ * @param src Source string to scan.
+ * @returns Number of lexical errors encountered (0 if none).
+ */
 int run_lexical_analysis(char *src) {
   printf("+===================================================================="
          "+\n");
@@ -554,9 +610,14 @@ int run_lexical_analysis(char *src) {
   return lex_error_count;
 }
 
-/* ========================================================================
- * PART 5 — PARSER (recursive-descent, builds AST)
- * ======================================================================== */
+/**
+ * Match the current token against an expected token type and advance on success.
+ *
+ * If the current token's type equals `expected`, consumes it by advancing to the next token.
+ * Otherwise records a syntax error and prints a diagnostic message showing the unexpected lexeme.
+ *
+ * @param expected TokenType expected at the current position.
+ */
 void match(TokenType expected) {
   if (current_token.type == expected) {
     advance();
@@ -573,6 +634,14 @@ ASTNode *parse_Stmt(void);
 ASTNode *parse_StmtList(void);
 ASTNode *parse_Block(void);
 
+/**
+ * Parse a factor-level expression and produce its AST node.
+ *
+ * Recognizes identifiers, numeric literals (int or float), boolean literals
+ * (`true`/`false`), parenthesized boolean expressions, and unary `!` and `-`.
+ *
+ * @returns Pointer to an allocated `ASTNode` representing the parsed factor,
+ *          or `NULL` if a syntax error was encountered. */
 ASTNode *parse_Factor(void) {
   ASTNode *node;
   if (current_token.type == TOK_ID) {
@@ -2047,9 +2116,21 @@ char *generate_tac(ASTNode *n) {
   }
 }
 
-/* ========================================================================
- * MAIN — full 6-phase compiler pipeline
- * ======================================================================== */
+/**
+ * Run the full compiler pipeline: read source, lex, parse into an AST, perform
+ * semantic analysis with scoped symbol tables, generate TAC/quadruples and
+ * triples, run optimization, emit pseudo-target code, and provide an
+ * interactive symbol-table lookup.
+ *
+ * The function reads input from a file (argv[1]) or stdin, prints the source,
+ * executes phases 1–8 in sequence, and halts further phases if lexical,
+ * syntax, or semantic errors are detected.
+ *
+ * @param argc Program argument count (may supply input file path).
+ * @param argv Program argument vector (argv[1] used as input file path when present).
+ * @returns 0 on successful compilation and normal exit, 1 on failure (e.g., file open error
+ *          or compilation halted due to detected errors).
+ */
 int main(int argc, char **argv) {
   char source[16384] = {0};
 
