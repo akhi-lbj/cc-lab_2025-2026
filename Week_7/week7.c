@@ -886,7 +886,7 @@ static int is_num(const char *t) {
 static int is_bl(const char *t) { return t && strcmp(t, "bool") == 0; }
 
 const char *eval_type(ASTNode *n) {
-  if (!n)
+  if (!n || has_error)
     return "void";
   if (n->kind == NODE_LITERAL)
     return n->type_str;
@@ -902,6 +902,7 @@ const char *eval_type(ASTNode *n) {
   if (n->kind == NODE_BINARY_OP) {
     const char *t1 = eval_type(n->children[0]);
     const char *t2 = eval_type(n->children[1]);
+    if (has_error) return "error";
     if (n->op == TOK_PLUS || n->op == TOK_MINUS || n->op == TOK_MUL ||
         n->op == TOK_DIV || n->op == TOK_MOD) {
       if (!is_num(t1) || !is_num(t2)) {
@@ -922,7 +923,7 @@ const char *eval_type(ASTNode *n) {
 }
 
 void analyze(ASTNode *n) {
-  if (!n)
+  if (!n || has_error)
     return;
   switch (n->kind) {
   case NODE_STMT_LIST:
@@ -950,7 +951,7 @@ void analyze(ASTNode *n) {
   case NODE_BLOCK:
     push_scope();
     analyze(n->children[0]);
-    print_all_scopes();
+    if (!has_error) print_all_scopes();
     pop_scope();
     break;
 
@@ -958,7 +959,7 @@ void analyze(ASTNode *n) {
     insert_symbol(n->lexeme, "class");
     push_scope();
     analyze(n->children[0]);
-    print_all_scopes();
+    if (!has_error) print_all_scopes();
     pop_scope();
     break;
 
@@ -987,8 +988,8 @@ void analyze(ASTNode *n) {
       sprintf(msg, "Condition must be bool, got '%s'", ct);
       sem_error(n->line, msg);
     }
-    analyze(n->children[1]);
-    if (n->kind == NODE_IF && n->child_count == 3)
+    if (!has_error) analyze(n->children[1]);
+    if (!has_error && n->kind == NODE_IF && n->child_count == 3)
       analyze(n->children[2]);
     break;
   }
@@ -2135,15 +2136,13 @@ int main(int argc, char **argv) {
   if (has_error || sem_error_count > 0) {
     printf("\n [FAIL] %d semantic error(s) detected. Compilation halted.\n", 
            sem_error_count);
-    printf(" *** Symbol table generation aborted due to semantic error(s).\n");
     pop_scope();
     return 1;
   } else {
     printf("\n [OK] Semantic analysis passed — no errors.\n");
+    printf("\n --- Final Symbol Table (global scope) ---\n");
+    print_all_scopes();
   }
-
-  printf("\n --- Final Symbol Table (global scope) ---\n");
-  print_all_scopes();
 
   /* Phase 6: TAC Generation - only if no errors so far */
   if (!has_error) {

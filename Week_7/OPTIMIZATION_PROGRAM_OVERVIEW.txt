@@ -1,0 +1,252 @@
+================================================================================
+WEEK 7 - CODE OPTIMIZATION PROGRAM OVERVIEW
+================================================================================
+
+PROJECT: Compiler Construction - Week 7 Assignment
+FOCUS: Code Optimization Phase (Phase 7) with Constant Folding and 
+       Dead Code Elimination
+
+--------------------------------------------------------------------------------
+1. OBJECTIVE
+--------------------------------------------------------------------------------
+The Week 7 compiler extends the Week 6 pipeline by adding an optimization phase
+that transforms the intermediate code (quadruples) to improve efficiency before
+target code generation. The optimization happens AFTER TAC generation and 
+BEFORE target code generation.
+
+Key Goals:
+- Reduce redundant computations through constant folding
+- Eliminate dead/temporary code that doesn't affect program output
+- Maintain correctness while improving performance
+- Demonstrate peephole optimization techniques
+
+--------------------------------------------------------------------------------
+2. OPTIMIZATION TECHNIQUES IMPLEMENTED
+--------------------------------------------------------------------------------
+
+A) CONSTANT FOLDING
+   - Detects operations where all operands are known constants at compile time
+   - Pre-computes the result during compilation instead of runtime
+   - Handles: arithmetic (+, -, *, /, %), relational (<, >, ==, !=, etc.), 
+             logical (&&, ||, !), and unary minus operations
+   
+   Example Transformation:
+     BEFORE: t1 = 2 * 3
+             t2 = t1 + 4
+     AFTER:  t1 = 6
+             t2 = 10
+
+B) DEAD CODE ELIMINATION (DCE)
+   - Identifies temporary variables that are computed but never used
+   - Removes instructions that define unused temporaries
+   - Iteratively processes until no more dead code is found
+   
+   Example Transformation:
+     BEFORE: t1 = 5 + 3    (t1 never used again)
+             t2 = a + b
+     AFTER:  t2 = a + b
+
+C) CONSTANT PROPAGATION
+   - Tracks which temporary variables hold constant values
+   - Substitutes constant values directly into subsequent operations
+   - Enables further constant folding opportunities
+
+--------------------------------------------------------------------------------
+3. DATA STRUCTURES FOR OPTIMIZATION
+--------------------------------------------------------------------------------
+
+a) optimized_quad_table[]
+   - Stores the optimized quadruples after transformation
+   - Same structure as original quad_table but contains improved code
+
+b) temp_const_known[]
+   - Boolean array tracking which temporary slots hold known constants
+
+c) temp_const_value[][]
+   - Stores the actual constant value for each known temporary
+
+d) temp_definition_count[]
+   - Counts how many times each temporary is defined
+   - Used to identify candidates for elimination
+
+e) optimization_fold_count
+   - Tracks number of constant folding transformations applied
+
+f) optimization_dce_count
+   - Tracks number of dead code instructions removed
+
+--------------------------------------------------------------------------------
+4. OPTIMIZATION WORKFLOW
+--------------------------------------------------------------------------------
+
+Step 1: Initialize optimization structures
+        - Reset counters and tracking arrays
+        - Prepare optimized_quad_table
+
+Step 2: First pass - Count definitions and track constants
+        - Scan all quadruples to count temp variable definitions
+        - Identify initial constant assignments
+
+Step 3: Main optimization loop - Process each quadruple
+        For each quadruple:
+        a) Substitute known constants into operands
+        b) Attempt constant folding based on operation type:
+           - Assignment (=): Track constant values
+           - Unary ops (uminus, !): Fold if operand is constant
+           - Binary ops (+, -, *, /, %, etc.): Fold if both operands constant
+           - Conditional jumps (if, iff): Simplify if condition is constant
+        c) Emit transformed quadruple to optimized table
+        d) Clear constant tracking on control flow changes (labels, gotos)
+
+Step 4: Dead Code Elimination (iterative)
+        Repeat until no changes:
+        a) Mark all used temporaries by scanning arg1 and arg2
+        b) Remove quadruples that define unused temporaries
+        c) Update counts and repeat if any were removed
+
+Step 5: Output optimized quadruples
+        - Display optimized table with statistics
+        - Show fold count and DCE count
+
+--------------------------------------------------------------------------------
+5. KEY FUNCTIONS IN week7.c
+--------------------------------------------------------------------------------
+
+Optimization Core Functions:
+├── optimize_quadruples()           [Line ~1605]
+│   └── Main driver function coordinating all optimizations
+│
+├── try_fold_unary()                [Line ~1446]
+│   └── Attempts to fold unary operations (uminus, !)
+│
+├── try_fold_binary()               [Line ~1467]
+│   └── Attempts to fold binary operations (+, -, *, /, %, relational, logical)
+│
+├── eliminate_dead_temp_code()      [Line ~1566]
+│   └── Iteratively removes dead temporary definitions
+│
+├── substitute_temp_constant()      [Line ~1418]
+│   └── Replaces temp variable with its known constant value
+│
+├── remember_temp_constant()        [Line ~1402]
+│   └── Records that a temp variable holds a specific constant
+│
+├── lookup_temp_constant()          [Line ~1411]
+│   └── Retrieves constant value for a temp variable if known
+│
+├── forget_temp_constant()          [Line ~1396]
+│   └── Marks a temp variable's constant value as unknown
+│
+├── append_optimized_quad()         [Line ~1441]
+│   └── Adds a quadruple to the optimized table
+│
+└── print_optimized_quadruples()    [Line ~1689]
+    └── Displays the final optimized intermediate code
+
+Helper Functions:
+├── temp_slot()                     - Extracts numeric slot from temp name (t0, t1...)
+├── is_temp_name()                  - Checks if string is a temp variable
+├── is_constant_literal()           - Checks if string is a numeric/bool constant
+├── is_numeric_literal()            - Checks if string is a numeric constant
+├── is_integer_literal()            - Checks if string is an integer constant
+├── is_bool_literal()               - Checks if string is true/false
+├── literal_truth_value()           - Gets boolean value of a literal
+├── format_numeric_result()         - Formats numeric results consistently
+└── is_removable_temp_definition()  - Checks if quad defines removable temp
+
+--------------------------------------------------------------------------------
+6. COMPARISON: WEEK 6 vs WEEK 7
+--------------------------------------------------------------------------------
+
+WEEK 6 Features:
+- Lexical Analysis (Phase 1)
+- Syntax Analysis + AST (Phase 2)
+- Syntax Error Detection (Phase 3)
+- Symbol Table Construction (Phase 4)
+- Semantic Analysis (Phase 5)
+- TAC Generation (Phase 6)
+- Quadruples & Triples Tables (Phase 6b, 6c)
+- Target Code Generation (Phase 8)
+
+WEEK 7 ADDITIONS:
+✓ All Week 6 features PLUS:
+- Enhanced error handling with explicit error messages and line numbers
+- Early termination on errors (no symbol table/TAC on errors)
+- NEW: Phase 7 - Code Optimization
+  * Constant folding for arithmetic, relational, and logical operations
+  * Constant propagation through temporary variables
+  * Dead code elimination for unused temporaries
+  * Statistics tracking (fold count, DCE count)
+- Optimized target code generation (uses optimized quadruples)
+
+--------------------------------------------------------------------------------
+7. EXAMPLE OPTIMIZATION SCENARIOS
+--------------------------------------------------------------------------------
+
+Scenario 1: Arithmetic Constant Folding
+Input Code:     a = 2 * (3 + 4);
+TAC (Before):   t0 = 3 + 4
+                t1 = 2 * t0
+                a = t1
+TAC (After):    t0 = 7
+                t1 = 14
+                a = t1
+
+Scenario 2: Dead Code Elimination
+Input Code:     t1 = 5 + 3    // Never used
+                t2 = a + b
+                c = t2
+TAC (Before):   t0 = 5 + 3
+                t1 = a + b
+                c = t1
+TAC (After):    t1 = a + b
+                c = t1
+
+Scenario 3: Logical Constant Folding
+Input Code:     if (true && false) { ... }
+TAC (Before):   t0 = true && false
+                if t0 goto L1
+TAC (After):    t0 = false
+                // conditional jump removed or simplified
+
+--------------------------------------------------------------------------------
+8. BENEFITS OF THIS OPTIMIZATION APPROACH
+--------------------------------------------------------------------------------
+
+1. Performance Improvement
+   - Reduces runtime computations by pre-calculating constants
+   - Eliminates unnecessary instructions
+
+2. Code Size Reduction
+   - Fewer instructions in final target code
+   - Smaller memory footprint
+
+3. Educational Value
+   - Demonstrates fundamental optimization techniques
+   - Shows practical application of data flow analysis
+   - Illustrates trade-offs between compile-time and runtime
+
+4. Correctness Preservation
+   - Maintains semantic equivalence
+   - Only applies safe transformations
+
+--------------------------------------------------------------------------------
+9. LIMITATIONS AND FUTURE ENHANCEMENTS
+--------------------------------------------------------------------------------
+
+Current Limitations:
+- Only optimizes within basic blocks (no inter-block analysis)
+- Limited to simple constant expressions
+- No loop-invariant code motion
+- No common subexpression elimination beyond constants
+
+Possible Enhancements:
+- Add common subexpression elimination (CSE)
+- Implement loop-invariant code motion
+- Add strength reduction (e.g., x*2 → x<<1)
+- Implement copy propagation
+- Add register allocation optimization
+
+================================================================================
+END OF PROGRAM OVERVIEW
+================================================================================

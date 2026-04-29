@@ -1,0 +1,512 @@
+================================================================================
+WEEK 7 - CODE OPTIMIZATION PRESENTATION DIVISION
+Team: 4 Members - Akhil, Sohail, Anurag, Aaron
+================================================================================
+
+This document divides the Code Optimization explanation equally among the 
+4 team members for the presentation to the teacher.
+
+================================================================================
+TEAM MEMBER ASSIGNMENTS
+================================================================================
+
+------------------------------------------------------------------------------
+1. AKHIL - Optimization Overview & Constant Folding (Core Logic)
+------------------------------------------------------------------------------
+
+RESPONSIBILITY:
+- Introduce the optimization phase and its purpose
+- Explain constant folding technique with code walkthrough
+- Demonstrate how arithmetic/logical constants are pre-computed
+
+CODE BLOCKS TO PREPARE:
+
+A) Main Optimization Driver Function:
+   Location: optimize_quadruples() [Line ~1605-1687]
+   
+   Key Points to Explain:
+   - Initialization of optimization structures
+   - First pass to count temp definitions
+   - Main loop processing each quadruple
+   - How control flows to folding functions
+
+B) Binary Constant Folding:
+   Location: try_fold_binary() [Line ~1467-1564]
+   
+   Code to Show:
+   ```c
+   static int try_fold_binary(const char *op, const char *arg1, const char *arg2,
+                              char *out) {
+     // Handle logical operators (&&, ||)
+     if (strcmp(op, "&&") == 0 || strcmp(op, "||") == 0) {
+       int left_is_const, right_is_const;
+       int left = literal_truth_value(arg1, &left_is_const);
+       int right = literal_truth_value(arg2, &right_is_const);
+       if (left_is_const && right_is_const) {
+         if (strcmp(op, "&&") == 0)
+           strcpy(out, (left && right) ? "true" : "false");
+         else
+           strcpy(out, (left || right) ? "true" : "false");
+         return 1;
+       }
+     }
+     
+     // Handle arithmetic operators (+, -, *, /)
+     if (strcmp(op, "+") == 0 || strcmp(op, "-") == 0 || 
+         strcmp(op, "*") == 0 || strcmp(op, "/") == 0) {
+       // Check if both operands are integers or floats
+       int both_ints = is_integer_literal(arg1) && is_integer_literal(arg2);
+       if (both_ints) {
+         long long left = strtoll(arg1, NULL, 10);
+         long long right = strtoll(arg2, NULL, 10);
+         // Perform operation and format result
+         if (strcmp(op, "+") == 0)
+           snprintf(out, 64, "%lld", left + right);
+         // ... similar for -, *, /
+         return 1;
+       }
+     }
+     
+     // Handle relational operators (<, >, ==, !=, etc.)
+     if (is_relational_op(op)) {
+       double left = strtod(arg1, NULL);
+       double right = strtod(arg2, NULL);
+       int result = 0;
+       if (strcmp(op, "<") == 0) result = left < right;
+       // ... similar for other relational ops
+       strcpy(out, result ? "true" : "false");
+       return 1;
+     }
+     
+     return 0; // Cannot fold
+   }
+   ```
+
+C) Integration Point in Main Loop:
+   Location: Lines ~1664-1674 in optimize_quadruples()
+   
+   ```c
+   } else {
+     if (try_fold_binary(work.op, work.arg1, work.arg2, folded_value)) {
+       strcpy(work.op, "=");
+       strcpy(work.arg1, folded_value);
+       work.arg2[0] = '\0';
+       if (is_temp_name(work.result))
+         remember_temp_constant(work.result, work.arg1);
+       optimization_fold_count++;
+     } else if (is_temp_name(work.result)) {
+       forget_temp_constant(work.result);
+     }
+   }
+   ```
+
+WHAT TO DEMONSTRATE:
+- Show before/after of: a = 2 * (3 + 4);
+- Explain how t0=3+4 becomes t0=7, then t1=2*7 becomes t1=14
+- Walk through the function call stack during folding
+
+------------------------------------------------------------------------------
+2. SOHAIL - Unary Folding, Constant Propagation & Tracking
+------------------------------------------------------------------------------
+
+RESPONSIBILITY:
+- Explain unary operation folding (uminus, logical NOT)
+- Describe constant propagation mechanism
+- Show how constants are tracked through temporary variables
+
+CODE BLOCKS TO PREPARE:
+
+A) Unary Constant Folding:
+   Location: try_fold_unary() [Line ~1446-1465]
+   
+   Code to Show:
+   ```c
+   static int try_fold_unary(const char *op, const char *arg1, char *out) {
+     // Handle unary minus: -5 becomes -5 (computed at compile time)
+     if (strcmp(op, "uminus") == 0 && is_numeric_literal(arg1)) {
+       if (is_integer_literal(arg1))
+         snprintf(out, 64, "%lld", -strtoll(arg1, NULL, 10));
+       else
+         format_numeric_result(-strtod(arg1, NULL), 0, out, 64);
+       return 1;
+     }
+
+     // Handle logical NOT: !true becomes false
+     if (strcmp(op, "!") == 0) {
+       int is_const;
+       int truth = literal_truth_value(arg1, &is_const);
+       if (is_const) {
+         strcpy(out, truth ? "false" : "true");
+         return 1;
+       }
+     }
+
+     return 0; // Cannot fold
+   }
+   ```
+
+B) Constant Tracking System - Data Structures:
+   Location: Lines ~1320-1340
+   
+   ```c
+   // Global arrays for tracking constants
+   static int temp_const_known[MAX_TEMP_VALUES];      // Which temps hold constants
+   static char temp_const_value[MAX_TEMP_VALUES][64]; // The actual constant values
+   static int temp_definition_count[MAX_TEMP_VALUES]; // How many times defined
+   ```
+
+C) Remember/Lookup/Forget Functions:
+   Location: Lines ~1396-1424
+   
+   Code to Show:
+   ```c
+   // Record that a temp variable holds a constant value
+   static void remember_temp_constant(const char *name, const char *value) {
+     int slot = temp_slot(name);
+     if (slot != -1 && can_track_temp_constant(name)) {
+       temp_const_known[slot] = 1;
+       strncpy(temp_const_value[slot], value, 63);
+       temp_const_value[slot][63] = '\0';
+     }
+   }
+
+   // Retrieve constant value if known
+   static const char *lookup_temp_constant(const char *name) {
+     int slot = temp_slot(name);
+     if (slot == -1 || !temp_const_known[slot])
+       return NULL;
+     return temp_const_value[slot];
+   }
+
+   // Substitute constant into operand
+   static void substitute_temp_constant(char *operand) {
+     const char *replacement = lookup_temp_constant(operand);
+     if (replacement) {
+       strncpy(operand, replacement, 63);
+       operand[63] = '\0';
+     }
+   }
+
+   // Mark constant as unknown (when temp is reassigned)
+   static void forget_temp_constant(const char *name) {
+     int slot = temp_slot(name);
+     if (slot != -1)
+       temp_const_known[slot] = 0;
+   }
+   ```
+
+D) Usage in Main Loop:
+   Location: Lines ~1624-1633
+   
+   ```c
+   copy_quad(&work, &quad_table[i]);
+   substitute_temp_constant(work.arg1);  // Replace t0 with actual value if known
+   substitute_temp_constant(work.arg2);
+
+   if (strcmp(work.op, "=") == 0) {
+     if (is_temp_name(work.result)) {
+       if (is_constant_literal(work.arg1))
+         remember_temp_constant(work.result, work.arg1);  // Track new constant
+       else
+         forget_temp_constant(work.result);  // No longer a known constant
+     }
+   }
+   ```
+
+WHAT TO DEMONSTRATE:
+- Show example: t0=5, t1=t0+3 → t1=8 (propagation)
+- Explain slot extraction from temp names (t0→slot 0, t1→slot 1)
+- Show how !true folds to false
+
+------------------------------------------------------------------------------
+3. ANURAG - Dead Code Elimination & Control Flow Handling
+------------------------------------------------------------------------------
+
+RESPONSIBILITY:
+- Explain dead code elimination algorithm
+- Describe iterative removal process
+- Show how control flow affects optimization
+
+CODE BLOCKS TO PREPARE:
+
+A) Dead Code Elimination Function:
+   Location: eliminate_dead_temp_code() [Line ~1566-1603]
+   
+   Code to Show:
+   ```c
+   static void eliminate_dead_temp_code(void) {
+     int removed;
+
+     do {
+       int used_temp[MAX_TEMP_VALUES] = {0};
+       int new_count = 0;
+
+       // PASS 1: Mark all used temporaries
+       for (int i = 0; i < optimized_quad_count; i++) {
+         int slot1 = temp_slot(optimized_quad_table[i].arg1);
+         int slot2 = temp_slot(optimized_quad_table[i].arg2);
+         if (slot1 != -1)
+           used_temp[slot1] = 1;  // This temp is used
+         if (slot2 != -1)
+           used_temp[slot2] = 1;  // This temp is used
+       }
+
+       // PASS 2: Remove unused temp definitions
+       removed = 0;
+       for (int i = 0; i < optimized_quad_count; i++) {
+         Quadruple *q = &optimized_quad_table[i];
+         int result_slot = temp_slot(q->result);
+
+         // Check if this defines an unused temp
+         if (is_removable_temp_definition(q) && result_slot != -1 &&
+             !used_temp[result_slot]) {
+           removed++;
+           continue;  // Skip this instruction (eliminate it)
+         }
+
+         optimized_quad_buffer[new_count++] = *q;  // Keep this instruction
+       }
+
+       // Update table if any were removed
+       if (removed > 0) {
+         memcpy(optimized_quad_table, optimized_quad_buffer,
+                sizeof(Quadruple) * new_count);
+         optimized_quad_count = new_count;
+         optimization_dce_count += removed;
+       }
+     } while (removed > 0);  // Repeat until no more dead code
+   }
+   ```
+
+B) Removable Temp Definition Check:
+   Location: is_removable_temp_definition() [Line ~1432-1437]
+   
+   ```c
+   static int is_removable_temp_definition(const Quadruple *q) {
+     return is_temp_name(q->result) && strcmp(q->op, "label") != 0 &&
+            strcmp(q->op, "goto") != 0 && strcmp(q->op, "if") != 0 &&
+            strcmp(q->op, "iff") != 0 && strcmp(q->op, "print") != 0 &&
+            strcmp(q->op, "return") != 0 && strcmp(q->op, "func_end") != 0;
+   }
+   ```
+
+C) Control Flow Reset:
+   Location: Lines ~1679-1683 in optimize_quadruples()
+   
+   ```c
+   // Clear constant tracking on control flow changes
+   // (labels, gotos, conditionals break the constant propagation chain)
+   if (strcmp(work.op, "label") == 0 || strcmp(work.op, "goto") == 0 ||
+       strcmp(work.op, "if") == 0 || strcmp(work.op, "iff") == 0 ||
+       strcmp(work.op, "func_end") == 0) {
+     memset(temp_const_known, 0, sizeof(temp_const_known));
+   }
+   ```
+
+D) Conditional Jump Folding:
+   Location: Lines ~1645-1658
+   
+   ```c
+   } else if (strcmp(work.op, "if") == 0 || strcmp(work.op, "iff") == 0) {
+     int is_const;
+     int truth = literal_truth_value(work.arg1, &is_const);
+     if (is_const) {
+       optimization_fold_count++;
+       if ((strcmp(work.op, "if") == 0 && truth) ||
+           (strcmp(work.op, "iff") == 0 && !truth)) {
+         // Condition always true: convert to unconditional goto
+         strcpy(work.op, "goto");
+         work.arg1[0] = '\0';
+         work.arg2[0] = '\0';
+       } else {
+         // Condition always false: eliminate the jump
+         emit_current = 0;
+       }
+     }
+   }
+   ```
+
+WHAT TO DEMONSTRATE:
+- Show iterative DCE: First pass marks used temps, second removes unused
+- Example: t0=5+3 (unused) gets removed, but t1=a+b (used) stays
+- Explain why control flow resets constant tracking (safety)
+
+------------------------------------------------------------------------------
+4. AARON - Output, Statistics & Week 6 vs Week 7 Comparison
+------------------------------------------------------------------------------
+
+RESPONSIBILITY:
+- Present the optimized output format
+- Explain optimization statistics
+- Compare Week 6 and Week 7 features
+- Show complete optimization workflow
+
+CODE BLOCKS TO PREPARE:
+
+A) Print Optimized Quadruples:
+   Location: print_optimized_quadruples() [Line ~1689-1734]
+   
+   Code to Show:
+   ```c
+   void print_optimized_quadruples(void) {
+     printf("\n+====================================================================+\n");
+     printf("| PHASE 7: OPTIMIZED INTERMEDIATE CODE                               |\n");
+     printf("|  Technique: Constant folding with dead temp elimination            |\n");
+     printf("+====================================================================+\n");
+     printf("| %-4s | %-10s | %-13s | %-13s | %-12s |\n", "idx", "op", "arg1",
+            "arg2", "result");
+     printf("+------+-----------+--------------+--------------+-------------+\n");
+
+     for (int i = 0; i < optimized_quad_count; i++) {
+       Quadruple *q = &optimized_quad_table[i];
+       const char *disp_arg1 = q->arg1[0] ? q->arg1 : "-";
+       const char *disp_arg2 = q->arg2[0] ? q->arg2 : "-";
+       const char *disp_result = q->result[0] ? q->result : "-";
+
+       // Format display based on operation type
+       if (strcmp(q->op, "label") == 0 || strcmp(q->op, "goto") == 0) {
+         disp_arg1 = "-";
+         disp_arg2 = "-";
+       } else if (strcmp(q->op, "if") == 0 || strcmp(q->op, "iff") == 0 ||
+                  strcmp(q->op, "=") == 0 || strcmp(q->op, "uminus") == 0 ||
+                  strcmp(q->op, "!") == 0) {
+         disp_arg2 = "-";
+       } else if (strcmp(q->op, "print") == 0 || strcmp(q->op, "return") == 0 ||
+                  strcmp(q->op, "func_end") == 0) {
+         disp_arg2 = "-";
+         disp_result = "-";
+       }
+
+       printf("| %-4d | %-10s | %-13s | %-13s | %-12s |\n", i, q->op, disp_arg1,
+              disp_arg2, disp_result);
+     }
+
+     printf("+------+-----------+--------------+--------------+-------------+\n");
+     printf("| Folds applied: %-3d  Dead temp instructions removed: %-3d          |\n",
+            optimization_fold_count, optimization_dce_count);
+     printf("| Optimized quadruples: %-3d                                         |\n",
+            optimized_quad_count);
+     printf("+====================================================================+\n");
+   }
+   ```
+
+B) Target Code Generation (Using Optimized Quads):
+   Location: print_target_code() [Line ~1736-1800+]
+   
+   Key Point: Show that target code now uses optimized_quad_table instead of quad_table
+   
+   ```c
+   void print_target_code(void) {
+     printf("\n+====================================================================+\n");
+     printf("| PHASE 8: TARGET CODE GENERATION (Pseudo Assembly)                  |\n");
+     printf("|  Generated from the optimized quadruples                           |\n");
+     printf("+====================================================================+\n\n");
+
+     // Uses optimized_quad_count and optimized_quad_table
+     for (int i = 0; i < optimized_quad_count; i++) {
+       Quadruple *q = &optimized_quad_table[i];
+       // ... generate assembly-like code
+     }
+   }
+   ```
+
+C) Optimization Statistics Variables:
+   Location: Lines ~1323-1330
+   
+   ```c
+   static Quadruple optimized_quad_table[MAX_QUADS];    // Optimized quads
+   static Quadruple optimized_quad_buffer[MAX_QUADS];   // Temporary buffer
+   static int optimized_quad_count = 0;                 // Count of optimized quads
+   static int optimization_fold_count = 0;              // Number of folds applied
+   static int optimization_dce_count = 0;               // Number of dead codes removed
+   ```
+
+D) Main Function Integration:
+   Location: main() function where optimize_quadruples() is called
+   
+   Key Points to Explain:
+   - Phase 6: Generate TAC and quadruples (quad_table)
+   - Phase 7: Call optimize_quadruples() → creates optimized_quad_table
+   - Phase 8: Generate target code from optimized_quad_table (not quad_table!)
+   - Error handling: If errors occur, skip optimization entirely
+
+COMPARISON TABLE TO PRESENT:
+
+┌────────────────────────┬─────────────────────┬──────────────────────────┐
+│ Feature                │ Week 6              │ Week 7                   │
+├────────────────────────┼─────────────────────┼──────────────────────────┤
+│ Lexical Analysis       │ ✓                   │ ✓ (Enhanced error msgs)  │
+│ Syntax Analysis        │ ✓                   │ ✓ (Enhanced error msgs)  │
+│ Symbol Table           │ ✓                   │ ✓ (Stops on error)       │
+│ Semantic Analysis      │ ✓                   │ ✓ (Stops on error)       │
+│ TAC Generation         │ ✓                   │ ✓                        │
+│ Quadruples/Triples     │ ✓                   │ ✓                        │
+│ CODE OPTIMIZATION      │ ✗                   │ ✓ NEW!                   │
+│ Target Code            │ From quad_table     │ From optimized_quad_table│
+│ Error Handling         │ Basic               │ Explicit + Line numbers  │
+└────────────────────────┴─────────────────────┴──────────────────────────┘
+
+WHAT TO DEMONSTRATE:
+- Show sample output with fold count and DCE count
+- Display before/after quadruple tables side by side
+- Explain how optimization reduces instruction count
+- Summarize the complete pipeline from source to optimized target code
+
+================================================================================
+PRESENTATION FLOW SUGGESTION
+================================================================================
+
+1. AKHIL (3-4 mins):
+   - Introduction to optimization
+   - Why optimize? (performance, code size)
+   - Constant folding demo with arithmetic expressions
+
+2. SOHAIL (3-4 mins):
+   - Unary operations folding
+   - Constant propagation mechanism
+   - How constants flow through temporary variables
+
+3. ANURAG (3-4 mins):
+   - Dead code elimination algorithm
+   - Iterative removal process
+   - Control flow considerations
+
+4. AARON (3-4 mins):
+   - Show final optimized output
+   - Present statistics (folds, DCE count)
+   - Week 6 vs Week 7 comparison
+   - Complete workflow summary
+
+TOTAL: ~12-16 minutes
+
+================================================================================
+PREPARATION CHECKLIST FOR EACH MEMBER
+================================================================================
+
+AKHIL:
+□ Understand optimize_quadruples() main loop
+□ Practice walking through try_fold_binary() with example
+□ Prepare example: a = 2 * (3 + 4); showing step-by-step folding
+□ Be ready to explain when folding CANNOT happen (variables, unknown values)
+
+SOHAIL:
+□ Understand temp_slot() extraction mechanism
+□ Practice explaining remember/lookup/forget cycle
+□ Prepare example: t0=5, t1=t0+3 showing propagation
+□ Be ready to explain unary minus and logical NOT folding
+
+ANURAG:
+□ Understand two-pass DCE algorithm (mark used, remove unused)
+□ Practice explaining why iteration is needed
+□ Prepare example with dead temp elimination
+□ Be ready to explain control flow reset necessity
+
+AARON:
+□ Understand output formatting logic
+□ Practice reading statistics from output
+□ Prepare Week 6 vs Week 7 comparison talking points
+□ Be ready to show complete pipeline flow
+
+================================================================================
+END OF DIVISION DOCUMENT
+================================================================================
