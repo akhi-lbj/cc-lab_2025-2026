@@ -1,0 +1,21 @@
+                 StmtList
+              /          \
+     Stmt                   Stmt
+       |                      |
+   DeclStmt              AssignStmt
+    /  |  \              /  /   \   \
+int   ID(a)   ;   ID(a)   =   BoolExpr    ;
+                                  |
+                               AndExpr
+                                  |
+                               EqExpr
+                                  |
+                               RelExpr
+                                  |
+                              ArithExpr
+                                  |
+                                Term
+                                  |
+                               Factor
+                                  |
+                               NUM(5)

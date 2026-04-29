@@ -3,6 +3,7 @@ int b;
 int sum;
 float avg;
 a = 2 * (3 + 4);
+a = 4.5;
 b = 15;
 sum = 0;
 while (a < b && b != 0) {

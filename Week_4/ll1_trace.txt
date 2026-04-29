@@ -1,0 +1,26 @@
+--- LL(1) Stack Trace ---
+
+Stack: [ EOF Program ]
+Input: INT (Type: 10)
+Action: Predict Rule Program -> StmtList 
+
+Stack: [ EOF StmtList ]
+Input: INT (Type: 10)
+Action: Predict Rule StmtList -> Stmt StmtList 
+
+Stack: [ EOF StmtList Stmt ]
+Input: INT (Type: 10)
+Action: Predict Rule Stmt -> AssignStmt 
+
+Stack: [ EOF StmtList AssignStmt ]
+Input: INT (Type: 10)
+Action: Predict Rule AssignStmt -> ID = BoolExpr ; 
+
+Stack: [ EOF StmtList ; BoolExpr = ID ]
+Input: INT (Type: 10)
+Action: Match ID
+
+Stack: [ EOF StmtList ; BoolExpr = ]
+Input: a (Type: 10)
+Action: ERROR! Expected = but got ID
+

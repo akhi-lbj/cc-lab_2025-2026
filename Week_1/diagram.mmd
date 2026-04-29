@@ -1,0 +1,30 @@
+flowchart TD
+  Start([Start]) --> ReadChar["Read next character"]
+  ReadChar --> IsSpace{Is whitespace?}
+  IsSpace -- Yes --> ReadChar
+  IsSpace -- No --> IsAlpha{Is letter or _?}
+
+  IsAlpha -- Yes --> CollectId["Collect identifier / keyword"]
+  CollectId --> IsKeyword{Is keyword?}
+  IsKeyword -- Yes --> PrintKW["Print <KEYWORD, token>"]
+  IsKeyword -- No --> PrintId["Print <IDENTIFIER, token>"]
+  PrintKW --> ReadChar
+  PrintId --> ReadChar
+
+  IsAlpha -- No --> IsDigit{Is digit?}
+  IsDigit -- Yes --> CollectNum["Collect number (count dots)"]
+  CollectNum --> DotCount{dotCount == 0?}
+  DotCount -- Yes --> PrintInt["Print <INTEGER, token>"]
+  DotCount -- One --> PrintFloat["Print <FLOAT, token>"]
+  DotCount -- More --> PrintNumErr["Print LEXICAL ERROR (invalid number)"]
+  PrintInt --> ReadChar
+  PrintFloat --> ReadChar
+  PrintNumErr --> ReadChar
+
+  IsDigit -- No --> IsOp{Operator or delimiter?}
+  IsOp -- Yes --> PrintOp["Print operator/delimiter token"]
+  IsOp -- No --> PrintOtherErr["Print LEXICAL ERROR (unknown symbol)"]
+  PrintOp --> ReadChar
+  PrintOtherErr --> ReadChar
+
+  ReadChar -->|EOF| End([End])

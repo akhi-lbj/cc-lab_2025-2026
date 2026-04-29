@@ -1,0 +1,20 @@
+--- Shift-Reduce Stack Trace ---
+
+Stack before Shift: [ ]
+Action: SHIFT INT
+
+Stack before Reduce: [ ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ Factor ]
+Action: SHIFT a
+
+Stack before Reduce: [ Factor ID ]
+Action: REDUCE Factor -> ID 
+
+Stack before Shift: [ Factor Factor ]
+Action: SHIFT ;
+
+Stack before Reduce: [ Factor Factor ; ]
+Action: REDUCE DeclTail -> ; 
+
