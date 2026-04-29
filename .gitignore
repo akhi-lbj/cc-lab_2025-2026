@@ -1,18 +1,26 @@
-# Ignore everything in the repository by default
-/*
+```
+# Compiled and build artifacts
+*.o
+*.obj
+*.out
 
-# Except for the .gitignore file itself
-!.gitignore
+# Dependencies
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
 
-# Except for the Week_4 directory
-!Week_4/
-!Week_5/
-!Week_6/
-!Week_7/
+# Logs and temp files
+*.log
+*.tmp
+*.swp
 
-# Files to ignore
-Week_4/2023A7PS0013U_Akhil_Week_4_Parser_Implementation.c
-Week_4/error.log
-Week_4/ll1_trace.txt
-Week_4/shift_reduce_trace.txt
+# Editors
+.vscode/
+.idea/
 
+# Environment
+.env
+.env.local
+*.env.*
+```
